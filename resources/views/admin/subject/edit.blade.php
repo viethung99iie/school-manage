@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 <div class="card">
     <form action="{{route('admins.subject.update')}}" method="post" class="p-5">

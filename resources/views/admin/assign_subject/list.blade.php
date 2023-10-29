@@ -1,12 +1,21 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 <div class="card">
-  <div class="p-5 table-responsive">
+  <div class="p-4 table-responsive">
         <div class="row d-flex justify-content-lg-end">
-            <h3 >Danh sách môn học của các lớp</h3>
-
+            <div class="col-8">
+                <h2 class="text-center">Danh sách môn học của các lớp</h2>
+            </div>
+            <div class="col-4 text-end">
+            <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.assign_subject.create')}}">
+                <i class="fas fa-plus">
+                </i>&nbsp;&nbsp;Đăng ký
+            </a>
+             </div>
         </div>
-        <div class="d-flex justify-content-end mx-5"> <a href="{{route('admins.assign_subject.create')}}" class="btn btn-facebook "> Đăng ký môn học</a></div>
         @include('message')
     <form action="" method="GET" class="m-3">
            <div class="row">
@@ -88,9 +97,15 @@
           </td>
 
           <td class="align-middle">
-            <div class="row d-flex ">
-                <a href="{{ route('admins.assign_subject.edit', ['id'=>$item->id])}}" class="btn btn-primary w-50 mr-1">Sửa</a>
-                <a href="{{ route('admins.assign_subject.delete', ['id'=>$item->id])}}" class="btn btn-danger w-50 ">Xóa</a>
+            <div class="ms-auto text-start">
+                {{-- xóa --}}
+                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('admins.assign_subject.delete', ['id'=>$item->id])}}">
+                    <i class="far fa-trash-alt me-2"></i>Xóa
+                </a>
+                {{-- sửa --}}
+                <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('admins.assign_subject.edit', ['id'=>$item->id])}}">
+                    <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
+                </a>
             </div>
         </tr>
         @endif

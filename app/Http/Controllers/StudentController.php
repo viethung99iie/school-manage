@@ -74,6 +74,7 @@ class StudentController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->mobile_number = $request->mobile_number;
         $user->user_type = 3;
         $user->student_id =$student->id;
         $user->status = $request->status;
@@ -92,7 +93,7 @@ class StudentController extends Controller
         $id = session('id');
           $rulers = [
             'name' =>'required|max:50',
-            'email' =>'required|email|unique:users,email,'.$id,
+            'email' =>'required|email|unique:users,email,'.$request->user_id,
             'date_of_birth' =>'required',
             'date_admission' =>'required',
             'id_student' =>'required',
@@ -134,17 +135,15 @@ class StudentController extends Controller
         $student->religion = $request->religion;
         $student->save();
 
-        $user =  User::find(Auth::user()->id);
+        $user =  User::find($request->user_id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->mobile_number = $request->mobile_number;
         if(!empty($request->password)){
             $user->password = Hash::make($request->password);
         }
         $user->status = $request->status;
         $user->save();
-
-
-
         return redirect()->route('admins.student.list')->with('success','Cập nhật sinh viên thành công!');
     }
 

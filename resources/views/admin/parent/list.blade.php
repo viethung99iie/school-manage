@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 <style>
     .avatar{
@@ -9,12 +12,18 @@
 </style>
 
 <div class="card">
-
-  <div class="table-responsive p-5">
+  <div class="table-responsive p-4">
         <div class="row d-flex justify-content-lg-end">
-            <h3 >{{$title}}</h3>
+            <div class="col-8">
+                <h2 class="text-center">{{$title}}</h2>
+            </div>
+            <div class="col-4 text-end">
+            <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.parent.create')}}">
+                <i class="fas fa-plus">
+                </i>&nbsp;&nbsp;Thêm phụ huynh
+            </a>
+             </div>
         </div>
-        <div class="d-flex justify-content-end mx-5"> <a href="{{route('admins.parent.create')}}" class="btn btn-facebook "> Thêm học sinh</a></div>
            @include('message')
     <form action="" method="GET" class="m-3">
            <div class="row">
@@ -60,44 +69,58 @@
             <table class="table align-items-center mb-0 ">
       <thead >
         <tr class="table-primary">
-          <th  class="text-uppercase text-dark text-sm font-weight-bolder opacity-9">#</th>
-          <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Avatar</th>
-          <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Tên</th>
-          <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Email</th>
-             <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Giới tính</th>
-          <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Hành động</th>
+          <th  class=" text-dark text-xs font-weight-bolder opacity-9">Phụ huynh</th>
+             <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Địa chỉ</th>
+             <th class="text-dark text-xs font-weight-bolder opacity-9 ps-2">Ngày sinh</th>
+             <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Giới tính</th>
+          <th class=" text-dark text-sm font-weight-bolder opacity-9 ps-2"></th>
         </tr>
       </thead>
       <tbody>
          @foreach ($parents as $item)
             <tr>
+                <td>
+                        <div class="d-flex px-2 py-1">
+                        <div>
+                            <img src="https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{$item->user_name}}</h6>
+                            <p class="text-xs text-secondary mb-0">{{$item->user_email}}</p>
+                        </div>
+                        </div>
+                    </td>
           <td>
-            <div class="d-flex px-2">
-              <div class="my-auto">
-                <h5 class="mb-0 text-sm">{{$item->id}}</h5>
-              </div>
-            </div>
-          </td>
-           <td>
-            <h5 class="mb-0 text-dark text-sm"><img class='avatar' src="https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg" alt=""></h5>
-          </td>
-          <td>
-            <h5 class="mb-0 text-dark text-sm">{{$item->user_name}}</h5>
-          </td>
-          <td>
-            <span class="badge badge-dot me-2">
-              <span class="text-dark text-xs">{{$item->user_email}}</span>
+            <span class="badge badge-dot me-2 text-secondary ">
+              {{$item->address}}
             </span>
           </td>
           <td>
             <span class="badge badge-dot me-2">
-              <span class="text-dark text-xs">{{$item->gender}}</span>
+              <span class="text-secondary ">{{$item->date_of_birth}}</span>
+            </span>
+          </td>
+          <td>
+            <span class="badge badge-dot me-2">
+              <span class="text-secondary text-xs">{{$item->gender}}</span>
             </span>
           </td>
           <td class="align-middle">
-            <div class="row d-flex ">
-                <a href="{{ route('admins.parent.edit', ['id'=>$item->id])}}" class="btn btn-primary w-50 mr-1">Sửa</a>
-                <a href="{{ route('admins.parent.delete', ['id'=>$item->id])}}" class="btn btn-danger w-50 ">Xóa</a>
+            <div class="ms-auto text-start">
+                {{-- con của tôi --}}
+                <a class="btn btn-link text-primary px-1 mb-0" href="{{ route('admins.parent.my-student', ['id'=>$item->id])}}">
+                    <i class="fa-solid fa-user-graduate text-primary me-2" aria-hidden="true"></i>Con của tôi
+                </a>
+                {{-- xóa --}}
+                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="{{ route('admins.parent.delete', ['id'=>$item->user_id])}}">
+                    <i class="far fa-trash-alt me-2"></i>Xóa
+                </a>
+                 {{-- sửa --}}
+                <a class="btn btn-link text-dark px-1 mb-0" href="{{ route('admins.parent.edit', ['id'=>$item->id])}}">
+                    <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
+                </a>
+
+
             </div>
         </tr>
         @endforeach

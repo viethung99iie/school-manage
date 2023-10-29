@@ -10,12 +10,8 @@
           <div class="card mb-4">
             <form action="">
                 <div class="card-body text-center">
-                    @if ($student->user_avatar!=null)
-                        <img src="{{ asset('image/'.$student->user_avatar) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                    @else
-                        <img src="{{ asset('image/default.png') }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                    @endif
-              <h5 class="my-3">{{$student->user_name}}</h5>
+                    <img src="{{ asset('image/'.$teacher->user_avatar) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3">{{$teacher->user_name}}</h5>
               <!-- Button trigger modal -->
             <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Thay đổi Avatar
@@ -53,7 +49,7 @@
          {{-- kết thúc thông tin liên hệ mạng xã hội --}}
         </div>
         <div class="col-lg-8">
-          <form action="{{route('admins.student.update')}}" method="post">
+          <form action="{{route('admins.teacher.update')}}" method="post">
             @csrf
             <div class="card mb-4">
             <div class="card-header pb-0">
@@ -65,7 +61,7 @@
                   <p class="mb-0">Họ và tên</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="name" value="{{old('name') ?? $student->user_name}}" placeholder="VD: Nguyễn Việt Hưng" >
+                  <input class="form-control" type="text" name="name" value="{{old('name') ?? $teacher->user_name}}" placeholder="VD: Nguyễn Việt Hưng" >
                 @error('name')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -74,11 +70,11 @@
 
               <div class="row mb-3 ">
                 <div class="col-sm-3">
-                  <p class="mb-0">Mã sinh viên</p>
+                  <p class="mb-0">Mã giảng viên</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="id_student" value="{{old('id_student') ?? $student->id_student}}"  placeholder="VD: 22IT.B100" >
-                    @error('id_student')
+                  <input class="form-control" type="text" name="id_teacher" value="{{old('id_teacher') ?? $teacher->id_teacher}}"  placeholder="VD: 22IT.B100" >
+                    @error('id_teacher')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
                 </div>
@@ -89,7 +85,7 @@
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="email" value="{{old('email') ?? $student->user_email}}" placeholder="VD: viethung@gmail.com" >
+                  <input class="form-control" type="text" name="email" value="{{old('email') ?? $teacher->user_email}}" placeholder="VD: viethung@gmail.com" >
             @error('email')
             <span style="color: red" class="text-sm">{{$message}}</span>
             @enderror
@@ -113,7 +109,7 @@
                   <p class="mb-0">Di động</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="mobile_number" value="{{old('mobile_number') ?? $student->user_mobile}}" placeholder="VD: 0987xxxx" >
+                  <input class="form-control" type="text" name="mobile_number" value="{{old('mobile_number') ?? $teacher->user_mobile}}" placeholder="VD: 0987xxxx" >
             @error('mobile_number')
             <span style="color: red" class="text-sm">{{$message}}</span>
             @enderror
@@ -125,8 +121,8 @@
                   <p class="mb-0">Địa chỉ</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="address" value="{{old('native') ?? $student->native}}"  placeholder="VD: Thừa Thiên Huế" >
-                    @error('native')
+                  <input class="form-control" type="text" name="address" value="{{old('address') ?? $teacher->address}}"  placeholder="VD: Thừa Thiên Huế" >
+                    @error('address')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                     @enderror
                 </div>
@@ -143,7 +139,7 @@
                   <p class="mb-0">Chức vụ</p>
                 </div>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" name="position" value="{{old('position') ?? $student->position}}"  placeholder="VD: Trưởng Khoa" >
+                  <input class="form-control" type="text" name="position" value="{{old('position') ?? $teacher->position}}"  placeholder="VD: Trưởng Khoa" >
                     @error('position')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -160,13 +156,13 @@
 
               <div class="row mb-4">
                 <div class="col-sm-4">
-                  <p class="mb-0">Lớp</p>
+                  <p class="mb-0">Chủ nhiệm</p>
                 </div>
                 <div class="col-sm-8">
                    <select class="form-control" name='class_id'>
                     <option >-- Lớp --</option>
                     @foreach ($class as $item)
-                    <option value='{{$item->id}}' {{$student->class_id==$item->id?'selected':''}}>{{$item->name}}</option>
+                    <option value='{{$item->id}}' {{$teacher->class_id==$item->id?'selected':''}}>{{$item->name}}</option>
                     @endforeach
                 </select>
             @error('class_id')
@@ -182,9 +178,9 @@
                 <div class="col-sm-8">
                    <select class="form-control" name='gender'>
                 <option value="" >-- Chọn giới tính--</option>
-                <option value="male" {{$student->gender==='male'?'selected':''}}>Nam</option>
-                <option value="female" {{$student->gender==='female'?'selected':''}}>Nữ</option>
-                <option value="other" {{$student->gender==='other'?'selected':''}}>Khác</option>
+                <option value="male" {{$teacher->gender==='male'?'selected':''}}>Nam</option>
+                <option value="female" {{$teacher->gender==='female'?'selected':''}}>Nữ</option>
+                <option value="other" {{$teacher->gender==='other'?'selected':''}}>Khác</option>
             </select>
             @error('gender')
             <span style="color: red" class="text-sm">{{$message}}</span>
@@ -196,7 +192,7 @@
                   <p class="mb-0">Ngày sinh</p>
                 </div>
                 <div class="col-sm-8">
-                   <input class="form-control" type="date" name='date_of_birth' value="{{old('date_of_birth') ?? $student->date_of_birth}}">
+                   <input class="form-control" type="date" name='date_of_birth' value="{{old('date_of_birth') ?? $teacher->date_of_birth}}">
                     @error('date_of_birth')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                     @enderror
@@ -208,7 +204,7 @@
                   <p class="mb-0">Căn cước công dân</p>
                 </div>
                 <div class="col-sm-8">
-                    <input class="form-control" type="number" name="id_card" value="{{old('id_card') ?? $student->id_card}}"  placeholder="VD: 02382183823..." >
+                    <input class="form-control" type="number" name="id_card" value="{{old('id_card') ?? $teacher->id_card}}"  placeholder="VD: 02382183823..." >
                 @error('id_card')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -219,7 +215,7 @@
                   <p class="mb-0">Ngày cấp</p>
                 </div>
                 <div class="col-sm-8">
-                   <input class="form-control" type="date" name='date_card' value="{{old('date_card')?? $student->date_card }}">
+                   <input class="form-control" type="date" name='date_card' value="{{old('date_card')?? $teacher->date_card }}">
                     @error('date_card')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -231,7 +227,7 @@
                   <p class="mb-0">Dân tộc</p>
                 </div>
                 <div class="col-sm-8">
-                  <input class="form-control" type="text" name="nation" value="{{old('nation') ?? $student->nation}}"  placeholder="VD: Kinh" >
+                  <input class="form-control" type="text" name="nation" value="{{old('nation') ?? $teacher->nation}}"  placeholder="VD: Kinh" >
                     @error('nation')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -242,19 +238,8 @@
                   <p class="mb-0">Tôn giáo</p>
                 </div>
                 <div class="col-sm-8">
-                   <input class="form-control" type="text" name="religion" value="{{old('religion') ?? $student->religion}}"  placeholder="VD: Không" >
+                   <input class="form-control" type="text" name="religion" value="{{old('religion') ?? $teacher->religion}}"  placeholder="VD: Không" >
                     @error('religion')
-                    <span style="color: red" class="text-sm">{{$message}}</span>
-                @enderror
-                </div>
-              </div>
-                <div class="row mb-3">
-                <div class="col-sm-4">
-                  <p class="mb-0">Ngày nhập học</p>
-                </div>
-                <div class="col-sm-8">
-                    <input class="form-control" type="date" name='date_join' value="{{old('date_admission')?? $student->date_admission}}">
-                    @error('date_admission')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
                 </div>
@@ -262,24 +247,59 @@
 
                 <div class="row mb-3">
                 <div class="col-sm-4">
-                  <p class="mb-0">Tình trạng học tập</p>
+                  <p class="mb-0">Bằng cấp, chứng chỉ</p>
+                </div>
+                <div class="col-sm-8">
+                   <textarea name="quafilication" id="editor2" rows="5" class="form-control mb-2" style="resize: none;">{{old('quafilication')?? $teacher->quafilication}}</textarea>
+                @error('quafilication')
+                <span style="color: red" class="text-sm">{{$message}}</span>
+                @enderror
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-4">
+                  <p class="mb-0">Kinh nghiệm</p>
+                </div>
+                <div class="col-sm-8">
+                   <textarea name="work_exp" id="editor" rows="5" class="form-control mb-2" style="resize: none;">{{old('work_exp')?? $teacher->work_exp}}</textarea>
+                @error('work_exp')
+                <span style="color: red" class="text-sm">{{$message}}</span>
+                @enderror
+                </div>
+              </div>
+                <div class="row mb-3">
+                <div class="col-sm-4">
+                  <p class="mb-0">Bằt đầu giảng dạy</p>
+                </div>
+                <div class="col-sm-8">
+                    <input class="form-control" type="date" name='date_join' value="{{old('date_card')?? $teacher->date_card}}">
+                    @error('date_join')
+                    <span style="color: red" class="text-sm">{{$message}}</span>
+                @enderror
+                </div>
+              </div>
+
+                <div class="row mb-3">
+                <div class="col-sm-4">
+                  <p class="mb-0">Tình trạng hôn nhân</p>
                 </div>
                 <div class="col-sm-8">
                     <select class="form-control" name='marital_status'>
                         <option>-- Tình trạng --</option>
-                        <option value='2' {{$student->user_status=='2'?'selected':''}}>Đang theo học</option>
-                        <option value='3' {{$student->user_status=='3'?'selected':''}}>Đã tốt nghiệp</option>
-                        <option value='4' {{$student->user_status=='4'?'selected':''}}>Đã bảo lưu</option>
+                        <option value='0' {{$teacher->marital_status=='0'?'selected':''}}>Không xác định</option>
+                        <option value='1' {{$teacher->marital_status=='1'?'selected':''}}> Đọc thân</option>
+                        <option value='2' {{$teacher->marital_status=='2'?'selected':''}}>Đã kết hôn</option>
                     </select>
                     @error('marital_status')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
                 </div>
               </div>
-              <input type="hidden" name="user_id" value="{{$student->user_id}}">
+              <input type="hidden" name="user_id" value="{{$teacher->user_id}}">
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary mx-3"> Cập nhật</button>
-              <a href="{{route('admins.student.list')}}" class="btn btn-warning ">Trở lại</a>
+              <a href="{{route('admins.teacher.list')}}" class="btn btn-warning ">Trở lại</a>
               </div>
             </div>
           </div>
@@ -299,10 +319,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{route('admins.student.change_avatar')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admins.teacher.change_avatar')}}" method="post" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name='user_id' value="{{$student->user_id}}">
-            <input type="hidden" name='old_avatar' value="{{$student->user_avatar}}">
+            <input type="hidden" name='user_id' value="{{$teacher->user_id}}">
+            <input type="hidden" name='old_avatar' value="{{$teacher->user_avatar}}">
             <input type="file" name='avatar'>
       </div>
       <div class="modal-footer">
@@ -313,4 +333,17 @@
     </div>
   </div>
 </div>
+
+<script>
+            ClassicEditor.create(document.querySelector("#editor")).catch(
+                (error) => {
+                    console.error(error);
+                }
+            );
+              ClassicEditor.create(document.querySelector("#editor2")).catch(
+                (error) => {
+                    console.error(error);
+                }
+            );
+        </script>
 @endsection

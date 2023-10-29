@@ -20,7 +20,7 @@ return new class extends Migration
             $table->String('occupation')->nullable();
             $table->String('address')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->String('religion')->nullable();
+            $table->String('nation')->nullable();
             $table->date('date_card')->nullable();
             $table->timestamps();
         });

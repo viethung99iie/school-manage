@@ -20,6 +20,7 @@ class DashboardController extends Controller
             if(Auth::user()->user_type === 4){
                  return view('parent/dashboard');
             }
-}
+    }
+
 
 }

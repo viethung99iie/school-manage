@@ -11,8 +11,8 @@ class ParentModel extends Model
     use HasFactory;
     protected $table = 'parents';
 
-    static function getparent(){
-        $parent =  self::select('parents.*','users.email as user_email','users.name as user_name')
+    static function getParent(){
+        $parent =  self::select('parents.*','users.email as user_email','users.name as user_name', 'users.id as user_id')
         ->join('users','users.parent_id','parents.id')
         ->orderBy('users.created_at','desc')
         ->where('users.user_type',4)
@@ -28,9 +28,8 @@ class ParentModel extends Model
         }
 
         static function getParentByID($id){
-             return self::select('parents.*','users.name as user_name','users.email as user_email')
+             return self::select('parents.*','users.name as user_name','users.email as user_email','users.status as user_status','users.id as user_id')
         ->join('users','users.parent_id','parents.id')
-        ->orderBy('users.created_at','desc')
         ->where('parents.id',$id)
         ->where('users.is_deleted',0)
         ->first();

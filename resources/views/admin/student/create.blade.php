@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 
 <div class="card">
@@ -143,6 +146,13 @@
                 <label for="example-text-input" class="form-control-label">Email<span style="color: red;">*</span></label>
                 <input class="form-control" type="text" name="email" value="{{old('email')}}" placeholder="VD: viethung@gmail.com" >
             @error('email')
+            <span style="color: red" class="text-sm">{{$message}}</span>
+            @enderror
+            </div>
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Di động</label>
+                <input class="form-control" type="text" name="mobile_number" value="{{old('mobile_number')}}" placeholder="VD: 03xxxxxx" >
+            @error('mobile_number')
             <span style="color: red" class="text-sm">{{$message}}</span>
             @enderror
             </div>

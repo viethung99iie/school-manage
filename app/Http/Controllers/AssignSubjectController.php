@@ -13,6 +13,7 @@ class AssignSubjectController extends Controller
      public $data =[];
 
     public function index(){
+        $this->data['title'] = 'Đăng ký môn học của các lớp';
         $this->data['class'] = ClassModel::getRecordAssign();
         return view('admin.assign_subject.list',$this->data);
     }

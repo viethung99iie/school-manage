@@ -18,7 +18,7 @@ class AdminController extends Controller
     }
     public function create(){
         $this->data['title'] = 'Thêm quản trị viên';
-        return view('admin.admin.create');
+        return view('admin.admin.create',$this->data);
     }
     public function store(Request $request){
         $rulers = [

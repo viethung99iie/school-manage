@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 
 <div class="card">
@@ -6,7 +9,7 @@
     <form action="{{route('admins.parent.store')}}" method="post" class="p-5">
         @csrf
             <div class="row d-flex justify-content-lg-end">
-        <h3 class='d-flex justify-content-center'>Thêm phụ huynh</h3>
+        <h3 class='d-flex justify-content-center'>{{$title}}</h3>
             </div>
                 @if ($errors->any())
                     <div class="alert alert-danger text-center text-white">Vui lòng kiểm tra lại thông tin </div>
@@ -15,12 +18,12 @@
             {{-- row 1 --}}
             <div class="row">
                 <div class="form-group col-6">
-                <label for="example-text-input" class="form-control-label">Họ và tên <span style="color: red;">*</span></label>
-                <input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Nhập họ và tên..." >
-            @error('name')
-            <span style="color: red" class="text-sm">{{$message}}</span>
-            @enderror
-            </div>
+                        <label for="example-text-input" class="form-control-label">Họ và tên <span style="color: red;">*</span></label>
+                        <input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Nhập họ và tên..." >
+                    @error('name')
+                    <span style="color: red" class="text-sm">{{$message}}</span>
+                    @enderror
+                </div>
                 <div class="form-group col-6">
                     <label for="example-text-input" class="form-control-label">Giới tính<span style="color: red;">*</span></label>
                     <select class="form-control" name='gender'>
@@ -36,30 +39,42 @@
             </div>{{-- end row 1 --}}
             {{-- row 2 --}}
             <div class="row">
-            {{-- 1 --}}
-            <div class="form-group col-6">
-                <label for="example-text-input" class="form-control-label">Ngày sinh<span style="color: red;">*</span></label>
-        <input class="form-control" type="date" name='date_of_birth' value="{{old('date_of_birth')}}">
-            @error('date_of_birth')
-            <span style="color: red" class="text-sm">{{$message}}</span>
-            @enderror
-            </div>
-            {{-- end 1 --}}
-            <div class="form-group col-6">
-                <label for="example-search-input" class="form-control-label">Quê quán<span style="color: red;">*</span></label>
-                <input class="form-control" type="text" name="native" value="{{old('native')}}"  placeholder="VD: Thừa Thiên Huế" >
-                @error('native')
-                <span style="color: red" class="text-sm">{{$message}}</span>
-            @enderror
-            </div>
+                {{-- 1 --}}
+                <div class="form-group col-6">
+                            <label for="example-text-input" class="form-control-label">Ngày sinh<span style="color: red;">*</span></label>
+                    <input class="form-control" type="date" name='date_of_birth' value="{{old('date_of_birth')}}">
+                        @error('date_of_birth')
+                        <span style="color: red" class="text-sm">{{$message}}</span>
+                        @enderror
+                </div>
+                {{-- end 1 --}}
+                <div class="form-group col-6">
+                        <label for="example-search-input" class="form-control-label">Quê quán<span style="color: red;">*</span></label>
+                        <input class="form-control" type="text" name="address" value="{{old('address')}}"  placeholder="VD: Thừa Thiên Huế" >
+                        @error('address')
+                        <span style="color: red" class="text-sm">{{$message}}</span>
+                        @enderror
+                </div>
             </div>{{-- end row 2 --}}
-            {{-- row 3 --}}
+            {{-- row 2 --}}
             <div class="row">
-            {{-- 1 --}}
-
-            {{-- end 1 --}}
-
-            </div>{{-- end row 3 --}}
+                {{-- 1 --}}
+                <div class="form-group col-6">
+                    <label for="example-search-input" class="form-control-label">Nghề Nghiệp<span style="color: red;">*</span></label>
+                    <input class="form-control" type="text" name="occupation" value="{{old('occupation')}}"  placeholder="VD: Giáo viên" >
+                    @error('occupation')
+                    <span style="color: red" class="text-sm">{{$message}}</span>
+                    @enderror
+                </div>
+                {{-- end 1 --}}
+                <div class="form-group col-6">
+                        <label for="example-search-input" class="form-control-label">Tôn giáo<span style="color: red;">*</span></label>
+                        <input class="form-control" type="text" name="nation" value="{{old('address')}}"  placeholder="VD: Không" >
+                        @error('nation')
+                        <span style="color: red" class="text-sm">{{$message}}</span>
+                        @enderror
+                </div>
+            </div>{{-- end row 2 --}}
             {{-- row 3 --}}
             <div class="row">
             {{-- 1 --}}

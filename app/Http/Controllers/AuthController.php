@@ -49,7 +49,7 @@ class AuthController extends Controller
                  return redirect('parent/dashboard');
             }
        }
-       return redirect()->back()->with('danger','Sai tài khoản hoặc mật khẩu');
+       return redirect()->back()->withInput()->with('danger','Sai tài khoản hoặc mật khẩu');
     }
     public function logOut(){
         Auth::logOut();

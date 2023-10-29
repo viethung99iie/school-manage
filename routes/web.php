@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +43,16 @@ Route::name('admins.')
         Route::post('/admin/admin/store',[AdminController::class, 'store'])->name('admin.store');
         Route::get('/admin/admin/edit/{id}',[AdminController::class, 'edit'])->name('admin.edit');
         Route::post('/admin/admin/update',[AdminController::class, 'update'])->name('admin.update');
-        Route::get('/admin/admin/delete/{id}',[AdminController::class, 'delete'])->name('admin.delete');
+    Route::get('/admin/admin/delete/{id}',[AdminController::class, 'delete'])->name('admin.delete');
+
+    // Giáo Viên
+        Route::get('/admin/teacher/list',[TeacherController::class, 'index'])->name('teacher.list');
+        Route::get('/admin/teacher/create',[TeacherController::class, 'create'])->name('teacher.create');
+        Route::post('/admin/teacher/store',[TeacherController::class, 'store'])->name('teacher.store');
+        Route::get('/admin/teacher/edit/{id}',[TeacherController::class, 'edit'])->name('teacher.edit');
+         Route::post('/admin/teacher/update',[TeacherController::class, 'update'])->name('teacher.update');
+        Route::get('/admin/teacher/delete/{id}',[TeacherController::class, 'delete'])->name('teacher.delete');
+        Route::post('admin/teacher/change_avatar', [ProfileController::class,'changeAvatar'])->name('teacher.change_avatar');
 
         // Lớp học
         Route::get('/admin/class/list',[ClassController::class, 'index'])->name('class.list');
@@ -74,6 +85,7 @@ Route::name('admins.')
         Route::get('/admin/student/edit/{id}',[StudentController::class, 'edit'])->name('student.edit');
          Route::post('/admin/student/update',[StudentController::class, 'update'])->name('student.update');
         Route::get('/admin/student/delete/{id}',[StudentController::class, 'delete'])->name('student.delete');
+        Route::post('admin/student/change_avatar', [ProfileController::class,'changeAvatar'])->name('student.change_avatar');
 
         // phụ huynh
         Route::get('/admin/parent/list',[ParentController::class, 'index'])->name('parent.list');
@@ -82,12 +94,18 @@ Route::name('admins.')
         Route::get('/admin/parent/edit/{id}',[ParentController::class, 'edit'])->name('parent.edit');
         Route::post('/admin/parent/update',[ParentController::class, 'update'])->name('parent.update');
         Route::get('/admin/parent/delete/{id}',[ParentController::class, 'delete'])->name('parent.delete');
-
-
+    Route::get('/admin/parent/my-student/{id}',[ParentController::class, 'myStudent'])->name('parent.my-student');
+    Route::get('/admin/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
+    Route::get('/admin/parent/not-my-student/{id}',[ParentController::class, 'notMyStudent'])->name('parent.not-my-student');
     });
 // teacher routes
 Route::name('teachers.')->middleware('teacher')->group(function () {
+
    Route::get('teacher/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+    // Profile
+     Route::get('teacher/profile/profile', [ProfileController::class,'teacher'])->name('teacher.profile');
+
 });
 // student routes
 Route::name('students.')->middleware('student')->group(function () {
@@ -97,4 +115,5 @@ Route::name('students.')->middleware('student')->group(function () {
 // parent routes
 Route::name('parents.')->middleware('parent')->group( function () {
   Route::get('parent/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
 });

@@ -15,8 +15,8 @@ class ClassController extends Controller
         return view('admin.class.list',$this->data);
     }
     public function create(){
-        $this->data['title'] = 'Thêm quản trị viên';
-        return view('admin.class.create');
+        $this->data['title'] = 'Thêm lớp học';
+        return view('admin.class.create',$this->data);
     }
     public function store(Request $request){
         $rulers = [

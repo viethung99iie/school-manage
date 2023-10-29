@@ -1,17 +1,23 @@
 @extends('layouts.app')
+@section('title')
+{{$title}}
+@endsection
 @section('content')
 
 
 <div class="card">
 
-  <div class="table-responsive p-5">
+  <div class="table-responsive p-4">
         <div class="row d-flex justify-content-lg-end">
-            <div class="col-6">
-                <h3 >Danh sách quản trị viên</h3>
+            <div class="col-8">
+                <h2 class="text-center" >Danh sách quản trị viên</h2>
             </div>
-            <div class="col-6 text-center">
-                      <a class="btn bg-gradient-faded-primary mb-0 text-white" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;Thêm quản trị viên</a>
-                    </div>
+            <div class="col-4 text-end">
+            <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.admin.create')}}">
+                <i class="fas fa-plus">
+                </i>&nbsp;&nbsp;Thêm quản trị viên
+            </a>
+             </div>
         </div>
 
            @include('message')
