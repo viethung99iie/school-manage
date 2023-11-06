@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\ClassModel;
 use App\Models\Student;
@@ -90,61 +93,8 @@ class StudentController extends Controller
         return view('admin.student.edit', $this->data);
     }
      public function update(Request $request){
-        $id = session('id');
-          $rulers = [
-            'name' =>'required|max:50',
-            'email' =>'required|email|unique:users,email,'.$request->user_id,
-            'date_of_birth' =>'required',
-            'date_admission' =>'required',
-            'id_student' =>'required',
-            'native' =>'required|max:100',
-            'gender' =>'required|max:50',
-            'nation' =>'required|max:50',
-            'id_card' =>'required|max:50',
-            'date_card' =>'required',
-            'class_id' =>'required|integer',
-            'religion' =>'required|max:50',
-            'status' =>'required|integer',
-        ];
-        $messages = [
-            'name.required' =>'Tên bắt buộc phải nhập!!',
-            'name.min' =>'Tên ít nhất :min kí tự!!',
-            'email.required' =>'Email bắt buộc phải nhập!!',
-            'email.email' =>'Email không đúng định dạng!',
-            'email.unique' =>'Email đã tồn tại!!',
-            'password.required' =>'Mật khẩu bắt buộc phải nhập!!',
-            'password.min' =>'Mật khẩu ít nhất :min kí tự!!',
-            'password.max' =>'Mật khẩu tối đa :max kí tự!!',
-            'required' =>'Trường này bắt buộc phải nhập!!',
-            'max ' => 'Tối đã :max kí tự!!',
-            'min ' => 'Tối thiểu :min kí tự!!',
-            'integer' => 'Trường này phải là số !!'
-        ];
-        $request->validate($rulers,$messages);
-
-        $student = Student::find($id);
-        $student->id_student = $request->id_student;
-        $student->date_of_birth = $request->date_of_birth;
-        $student->native = $request->native;
-        $student->gender = $request->gender;
-        $student->nation = $request->nation;
-        $student->id_card = $request->id_card;
-        $student->date_card = $request->date_card;
-        $student->date_admission = $request->date_admission;
-        $student->class_id = $request->class_id;
-        $student->religion = $request->religion;
-        $student->save();
-
-        $user =  User::find($request->user_id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->mobile_number = $request->mobile_number;
-        if(!empty($request->password)){
-            $user->password = Hash::make($request->password);
-        }
-        $user->status = $request->status;
-        $user->save();
-        return redirect()->route('admins.student.list')->with('success','Cập nhật sinh viên thành công!');
+            Student::updateStudent($request);
+    return redirect()->back()->with('success','Cập nhật sinh viên thành công!');
     }
 
     public function delete($id){
@@ -152,5 +102,13 @@ class StudentController extends Controller
          $user->is_deleted = 1;
          $user->save();
          return redirect()->route('admins.student.list')->with('success','Xóa sinh viên thành công!');
+    }
+
+     public function changeAvatarStudent (Request $request){
+        if(empty($request['avatar'])){
+                return redirect()->back()->with('danger', 'Đã xảy ra lỗi vui lòng thử lại!!');
+            }
+      User::changeAvartar($request);
+      return redirect()->back()->with('success','Cập nhật ảnh đại diện thành công!!');
     }
 }

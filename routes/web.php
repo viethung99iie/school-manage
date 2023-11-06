@@ -1,15 +1,18 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AssignSubjectController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClassController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ParentController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\TeacherController;
+
+use App\Http\Controllers\Admin\AssignSubjectController;
+use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ParentController;
+use App\Http\Controllers\User\Teacher\ProfileController as TeacherProfileController;
+use App\Http\Controllers\User\Student\ProfileController as StudentProfileController;
+use App\Http\Controllers\User\Parent\ProfileController as ParentProfileController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -85,7 +88,7 @@ Route::name('admins.')
         Route::get('/admin/student/edit/{id}',[StudentController::class, 'edit'])->name('student.edit');
          Route::post('/admin/student/update',[StudentController::class, 'update'])->name('student.update');
         Route::get('/admin/student/delete/{id}',[StudentController::class, 'delete'])->name('student.delete');
-        Route::post('admin/student/change_avatar', [ProfileController::class,'changeAvatar'])->name('student.change_avatar');
+        Route::post('admin/student/change_avatar', [StudentController::class,'changeAvatarStudent'])->name('student.change_avatar');
 
         // phụ huynh
         Route::get('/admin/parent/list',[ParentController::class, 'index'])->name('parent.list');
@@ -94,8 +97,8 @@ Route::name('admins.')
         Route::get('/admin/parent/edit/{id}',[ParentController::class, 'edit'])->name('parent.edit');
         Route::post('/admin/parent/update',[ParentController::class, 'update'])->name('parent.update');
         Route::get('/admin/parent/delete/{id}',[ParentController::class, 'delete'])->name('parent.delete');
-    Route::get('/admin/parent/my-student/{id}',[ParentController::class, 'myStudent'])->name('parent.my-student');
-    Route::get('/admin/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
+        Route::get('/admin/parent/my-student/{id}',[ParentController::class, 'myStudent'])->name('parent.my-student');
+        Route::get('/admin/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
     Route::get('/admin/parent/not-my-student/{id}',[ParentController::class, 'notMyStudent'])->name('parent.not-my-student');
     });
 // teacher routes
@@ -104,16 +107,34 @@ Route::name('teachers.')->middleware('teacher')->group(function () {
    Route::get('teacher/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
     // Profile
-     Route::get('teacher/profile/profile', [ProfileController::class,'teacher'])->name('teacher.profile');
+        Route::get('teacher/profile', [TeacherProfileController::class,'teacher'])->name('profile');
+        Route::get('/teacher/profile/edit/{id}',[TeacherProfileController::class, 'editTeacher'])->name('profile.edit');
+        Route::post('/teacher/profile/update',[TeacherProfileController::class, 'updateTeacher'])->name('profile.update');
+        Route::post('teacher/profile/change_avatar', [TeacherProfileController::class,'changeAvatarTeacher'])->name('profile.change_avatar');
+        Route::post('teacher/profile/change_password', [TeacherProfileController::class,'changePassTeacher'])->name('profile.change_password');
 
 });
 // student routes
 Route::name('students.')->middleware('student')->group(function () {
- Route::get('student/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('student/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+ // Profile
+        Route::get('student/profile', [StudentProfileController::class,'index'])->name('profile');
+        Route::get('/studentv/profile/edit/{id}',[StudentProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/student/profile/update',[StudentProfileController::class, 'update'])->name('profile.update');
+        Route::post('student/profile/change_avatar', [StudentProfileController::class,'changeAvatar'])->name('profile.change_avatar');
+        Route::post('student/profile/change_password', [StudentProfileController::class,'changePass'])->name('profile.change_password');
 });
 
 // parent routes
 Route::name('parents.')->middleware('parent')->group( function () {
-  Route::get('parent/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('parent/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+    // Profile
+    Route::get('parent/profile', [ParentProfileController::class,'index'])->name('profile');
+    Route::get('/parent/profile/edit/{id}',[ParentProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/parent/profile/update',[ParentProfileController::class, 'update'])->name('profile.update');
+    Route::post('parent/profile/change_avatar', [ParentProfileController::class,'changeAvatar'])->name('profile.change_avatar');
+    Route::post('parent/profile/change_password', [ParentProfileController::class,'changePass'])->name('profile.change_password');
 
 });

@@ -3,14 +3,17 @@
 {{$title}}
 @endsection
 @section('content')
-
  <div class="container py-5">
       <div class="row mb-3">
         <div class="col-lg-4">
           <div class="card mb-4">
             <form action="">
                 <div class="card-body text-center">
-                    <img src="{{ asset('image/'.$teacher->user_avatar) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    @if($teacher->user_avatar!=null)
+                        <img src="{{ asset('image/'.$teacher->user_avatar) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    @else
+                        <img src="{{ asset('image/default.png') }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    @endif
               <h5 class="my-3">{{$teacher->user_name}}</h5>
               <!-- Button trigger modal -->
             <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -50,7 +53,7 @@
         </div>
         <div class="col-lg-8">
             @include('message')
-          <form action="{{route('admins.teacher.update')}}" method="post">
+          <form action="{{route('teachers.profile.update')}}" method="post">
             @csrf
             <div class="card mb-4">
             <div class="card-header pb-0">
@@ -92,19 +95,6 @@
             @enderror
                 </div>
               </div>
-
-              <div class="row mb-3 ">
-                <div class="col-sm-3">
-                  <p class="mb-0">Mật khẩu</p>
-                </div>
-                <div class="col-sm-9">
-                  <input class="form-control" type="password" name="password" value="{{old('password')}}"  placeholder="Nhập mật khẩu..." >
-                @error('password')
-                <span style="color: red" class="text-sm">{{$message}}</span>
-                @enderror
-                </div>
-              </div>
-
               <div class="row mb-3 ">
                 <div class="col-sm-3">
                   <p class="mb-0">Di động</p>
@@ -300,7 +290,7 @@
               <input type="hidden" name="user_id" value="{{$teacher->user_id}}">
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary mx-3"> Cập nhật</button>
-              <a href="{{route('admins.teacher.list')}}" class="btn btn-warning ">Trở lại</a>
+              <a href="{{route('teachers.profile')}}" class="btn btn-warning ">Trở lại</a>
               </div>
             </div>
           </div>
@@ -320,7 +310,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{route('admins.teacher.change_avatar')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('teachers.profile.change_avatar')}}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name='user_id' value="{{$teacher->user_id}}">
             <input type="hidden" name='old_avatar' value="{{$teacher->user_avatar}}">

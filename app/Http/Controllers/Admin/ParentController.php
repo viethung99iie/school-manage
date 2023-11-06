@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\ParentModel;
 use App\Models\Student;
@@ -77,55 +80,10 @@ class ParentController extends Controller
         session()->put('id', $id);
         $this->data['title'] = 'Chỉnh sửa thông tin phụ huynh';
         $this->data['parent'] = parentModel::getParentByID($id);
-        // dd(parentModel::getParentByID($id));
         return view('admin.parent.edit', $this->data);
     }
      public function update(Request $request){
-        $id = session('id');
-         $rulers = [
-            'name' =>'required|max:50',
-            'email' => 'required|email|unique:users,email,'.$request->user_id,
-            'date_of_birth' =>'required',
-            'address' =>'required',
-            'occupation' =>'required|max:50',
-            'gender' =>'required|max:50',
-            'id_card' =>'required|integer',
-            'date_card' =>'required',
-            'nation' =>'required|max:50',
-            'status' =>'required|integer',
-        ];
-        $messages = [
-            'name.required' =>'Tên bắt buộc phải nhập!!',
-            'name.min' =>'Tên ít nhất :min kí tự!!',
-            'email.required' =>'Email bắt buộc phải nhập!!',
-            'email.email' =>'Email không đúng định dạng!',
-            'email.unique' =>'Email đã tồn tại!!',
-            'id_card.integer' =>'Trường này phải là số!!',
-            'required' =>'Trường này bắt buộc phải nhập!!',
-            'max ' => 'Tối đã :max kí tự!!',
-            'min ' => 'Tối thiểu :min kí tự!!',
-            'integer' => 'Trường này phải là số !!'
-        ];
-        $request->validate($rulers,$messages);
-        $parent = ParentModel::find($id);
-        $parent->date_of_birth = $request->date_of_birth;
-        $parent->address = $request->address;
-        $parent->occupation = $request->occupation;
-        $parent->gender = $request->gender;
-        $parent->id_card = $request->id_card;
-        $parent->date_card = $request->date_card;
-        $parent->nation = $request->nation;
-        $parent->save();
-
-        $user =  User::find($request->user_id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if(!empty($request->password)){
-            $user->password = Hash::make($request->password);
-        }
-        $user->status = $request->status;
-        $user->save();
-
+        ParentModel::update($request);
         return redirect()->route('admins.parent.list')->with('success','Cập nhật phụ huynh thành công!');
     }
     public function delete($id){

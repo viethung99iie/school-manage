@@ -53,6 +53,10 @@
          {{-- kết thúc thông tin liên hệ mạng xã hội --}}
         </div>
         <div class="col-lg-8">
+            @if ($errors->any())
+                    <div class="alert alert-danger text-center text-white">Vui lòng kiểm tra lại thông tin </div>
+                @endif
+            @include('message')
           <form action="{{route('admins.student.update')}}" method="post">
             @csrf
             <div class="card mb-4">
@@ -125,7 +129,7 @@
                   <p class="mb-0">Địa chỉ</p>
                 </div>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" name="address" value="{{old('native') ?? $student->native}}"  placeholder="VD: Thừa Thiên Huế" >
+                  <input class="form-control" type="text" name="native" value="{{old('native') ?? $student->native}}"  placeholder="VD: Thừa Thiên Huế" >
                     @error('native')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                     @enderror
@@ -253,7 +257,7 @@
                   <p class="mb-0">Ngày nhập học</p>
                 </div>
                 <div class="col-sm-8">
-                    <input class="form-control" type="date" name='date_join' value="{{old('date_admission')?? $student->date_admission}}">
+                    <input class="form-control" type="date" name='date_admission' value="{{old('date_admission')?? $student->date_admission}}">
                     @error('date_admission')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
@@ -265,13 +269,13 @@
                   <p class="mb-0">Tình trạng học tập</p>
                 </div>
                 <div class="col-sm-8">
-                    <select class="form-control" name='marital_status'>
+                    <select class="form-control" name='status'>
                         <option>-- Tình trạng --</option>
                         <option value='2' {{$student->user_status=='2'?'selected':''}}>Đang theo học</option>
                         <option value='3' {{$student->user_status=='3'?'selected':''}}>Đã tốt nghiệp</option>
                         <option value='4' {{$student->user_status=='4'?'selected':''}}>Đã bảo lưu</option>
                     </select>
-                    @error('marital_status')
+                    @error('status')
                     <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
                 </div>

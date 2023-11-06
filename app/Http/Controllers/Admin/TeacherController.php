@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\ClassModel;
 use App\Models\Teacher;
@@ -94,63 +97,7 @@ class TeacherController extends Controller
         return view('admin.teacher.edit', $this->data);
     }
      public function update(Request $request){
-        $id = session('id');
-            $rulers = [
-            'name' =>'required|max:50',
-            'id_teacher' =>'required|max:10',
-            'date_of_birth' =>'required',
-            'address' =>'required|max:100',
-            'gender' =>'required|max:50',
-            'nation' =>'required|max:50',
-            'id_card' =>'required|integer',
-            'date_card' =>'required',
-            'class_id' =>'required|integer',
-            'religion' =>'required|max:50',
-            'work_exp' =>'required',
-            'position' =>'required',
-            'quafilication' =>'required',
-            'date_join' =>'required',
-            'marital_status' =>'required',
-            'email' =>'required|email|unique:users,email,'.$request->user_id,
-        ];
-        $messages = [
-            'name.required' =>'Tên bắt buộc phải nhập!!',
-            'name.min' =>'Tên ít nhất :min kí tự!!',
-            'email.required' =>'Email bắt buộc phải nhập!!',
-            'email.email' =>'Email không đúng định dạng!',
-            'email.unique' =>'Email đã tồn tại!!',
-            'id_card.integer' =>'Trường này phải là số!!',
-            'required' =>'Trường này bắt buộc phải nhập!!',
-            'max ' => 'Tối đã :max kí tự!!',
-            'min ' => 'Tối thiểu :min kí tự!!',
-            'integer' => 'Trường này phải là số !!'
-        ];
-        $request->validate($rulers,$messages);
-        $teacher = teacher::find($id);
-        $teacher->id_teacher = $request->id_teacher;
-        $teacher->date_of_birth = $request->date_of_birth;
-        $teacher->address = $request->address;
-        $teacher->gender = $request->gender;
-        $teacher->nation = $request->nation;
-        $teacher->quafilication = $request->quafilication;
-        $teacher->position = $request->position;
-        $teacher->work_exp = $request->nation;
-        $teacher->id_card = $request->id_card;
-        $teacher->date_card = $request->date_card;
-        $teacher->date_join = $request->date_join;
-        $teacher->marital_status = $request->marital_status;
-        $teacher->class_id = $request->class_id;
-        $teacher->religion = $request->religion;
-        $teacher->save();
-
-        $user = User::find($request->user_id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->user_type = 2;
-        $user->teacher_id =$teacher->id;
-        $user->status = 0;
-        $user->save();
+        Teacher::updateTeacher($request);
         return redirect()->route('admins.teacher.list')->with('success','Cập nhật giảng viên thành công!');
     }
          public function delete($id){
