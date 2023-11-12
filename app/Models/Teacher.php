@@ -14,7 +14,7 @@ class Teacher extends Model
 
     protected $table = 'teachers';
 
-    // Lấy tất cả sinh viên
+    // Lấy tất cả gảng viên
     static function getTeacher(){
         $teacher =  self::select('teachers.*','class.name as class_name','users.email as user_email','users.name as user_name','users.id as user_id','users.mobile_number as user_mobile','users.profile_pic as user_avatar')
         ->join('class','class.id','teachers.class_id')
@@ -118,5 +118,9 @@ class Teacher extends Model
         $user->teacher_id =$teacher->id;
         $user->status = 0;
         $user->save();
+        }
+
+         public function Class(){
+        return $this->belongsToMany(ClassModel::class,'class_subject','teacher_id','class_id');
         }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class Student extends Model
@@ -71,7 +72,7 @@ class Student extends Model
 
         // tìm kiếm sinh viên của theo
         static function searchMyStudent($id){
-        if(empty(FacadesRequest::get('name') || FacadesRequest::get('email') || FacadesRequest::get('id_student') || FacadesRequest::get('date_of_birth'))){
+        if(FacadesRequest::get('name') && FacadesRequest::get('email') && FacadesRequest::get('id_student') && FacadesRequest::get('date_of_birth')){
             return;
         }
         $student =  self::select('students.*','class.name as class_name','users.email as user_email','users.name as user_name','users.id as user_id')
@@ -94,8 +95,9 @@ class Student extends Model
         if(FacadesRequest::get('date_of_birth')){
             $student = $student->whereDate('students.date_of_birth','=',FacadesRequest::get('date_of_birth'));
         }
-        $student = $student->paginate(5)->withQueryString();;
+        $student = $student->paginate(3)->withQueryString();;
         return $student;
+
         }
 
         static function updateStudent($request){
@@ -148,4 +150,17 @@ class Student extends Model
         $user->status = 0;
         $user->save();
         }
+
+        // danh sách sinh viên trong lớp
+
+        static function getStudentInClass($class_id){
+             return self::select('students.*','users.name as user_name','users.email as user_email','users.id as user_id', 'class.name as class_name')
+        ->join('class','class.id','students.class_id')
+        ->join('users','users.student_id','students.id')
+        ->orderBy('users.created_at','desc')
+        ->where('students.class_id',$class_id)
+        ->where('users.is_deleted',0)
+        ->paginate(8)->withQueryString();
+        }
+
 }

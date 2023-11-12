@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="card">
-    <form action="{{route('admins.subject.store')}}" method="post" class="p-5">
+    <form action="{{route('admins.class_teacher.store')}}" method="post" class="p-5">
         @csrf
             <div class="row d-flex justify-content-lg-end">
         <h3 class="">{{$title}}</h3>
@@ -14,25 +14,27 @@
         <div class="alert alert-danger text-center text-white">Vui lòng kiểm tra lại thông tin </div>
     @endif
             @csrf
-            {{-- name --}}
             <div class="form-group">
-                <label for="example-text-input" class="form-control-label text-sm">Tên
-                    môn học</label>
-                <input class="form-control" type="text" name="name" value="{{old('name')}}" placeholder="Nhập tên..." >
-                @error('name')
+                <label for="exampleFormControlSelect1" class="text-sm">Lớp đăng ký</label>
+                <select class="form-control " name="class_id">
+                    @foreach ($class as $item)
+                    <option value='{{$item->id}}'>{{$item->name}}</option>
+                    @endforeach
+                </select>
+                @error('class_id')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
             </div>
-            {{-- type --}}
+            {{-- Tất cả giáo viên --}}
             <div class="form-group">
-                <label for="exampleFormControlSelect1" class="text-sm">Thể loại</label>
-                <select class="form-control " name="type">
-                    <option value="">-- Chọn --</option>
-                    <option value='Toán'>Toán</option>
-                    <option value ='Lý'>Lý</option>
-                    <option value ='Hóa'>Hóa</option>
-                </select>
-                @error('type')
+                <label for="exampleFormControlSelect1" class="text-sm">Giáo viên chủ nhiệm</label>
+                @foreach ($teachers as $item)
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{$item->id}}" name="teacher_id[]">
+                        <label class="custom-control-label" for="customCheck1">{{$item->name}}</label>
+                    </div>
+                        @endforeach
+                @error('subject_id')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
             </div>
@@ -48,8 +50,8 @@
                 @enderror
             </div>
             <div class="container">
-                <button type="submit" class="btn btn-facebook">Thêm</button>
-                <a href="{{route('admins.subject.list')}}" class="btn btn-warning ">Trở lại</a>
+                <button type="submit" class="btn btn-facebook">Cập nhật</button>
+                <a href="{{route('admins.class_teacher.list')}}" class="btn btn-warning ">Trở lại</a>
             </div>
     </form>
 </div>

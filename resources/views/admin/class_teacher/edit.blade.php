@@ -5,10 +5,10 @@
 @section('content')
 
 <div class="card">
-    <form action="{{route('admins.assign_subject.update')}}" method="post" class="p-5">
+    <form action="{{route('admins.class_teacher.update')}}" method="post" class="p-5">
         @csrf
             <div class="row d-flex justify-content-lg-end">
-        <h3 class="">Cập nhật môn học cho các lớp</h3>
+        <h3 class="">{{$title}}</h3>
             </div>
                 @if ($errors->any())
         <div class="alert alert-danger text-center text-white">Vui lòng kiểm tra lại thông tin </div>
@@ -30,22 +30,22 @@
             {{-- Tất cả môn học --}}
 
             <div class="form-group">
-                <label for="exampleFormControlSelect1" class="text-sm">Môn học đăng ký</label>
-                @foreach ($subjects as $item)
+                <label for="exampleFormControlSelect1" class="text-sm">Giáo viên chủ nhiệm</label>
+                @foreach ($teachers as $item)
                 @php
                 $checked = '';
-                    foreach ($class->subjects as $key) {
+                    foreach ($class->teachers as $key) {
                         if($key->id == $item->id){
                             $checked = 'checked';
                         }
                     }
                 @endphp
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{$item->id}}" name="subject_id[]" {{$checked}}>
+                        <input class="form-check-input" type="checkbox" value="{{$item->id}}" name="teacher_id[]" {{$checked}}>
                         <label class="custom-control-label" for="customCheck1">{{$item->name}}</label>
                     </div>
                         @endforeach
-                @error('subject_id')
+                @error('teacher_id')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
             </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="container">
                 <button type="submit" class="btn btn-facebook">Cập nhật</button>
-                <a href="{{route('admins.assign_subject.list')}}" class="btn btn-warning ">Trở lại</a>
+                <a href="{{route('admins.class_teacher.list')}}" class="btn btn-warning ">Trở lại</a>
             </div>
     </form>
 </div>

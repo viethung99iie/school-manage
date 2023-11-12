@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -39,6 +38,10 @@ class ClassModel extends Model
         public function Subjects(){
             return $this->belongsToMany(Subject::class,'class_subject','class_id','subject_id');
         }
+        public function Teachers()
+        {
+            return $this->belongsToMany(Teacher::class, 'class_teacher', 'class_id', 'teacher_id');
+        }
     static function getRecordAssign(){
         $class = self::join('users', 'users.id', 'class.created_by')
                     ->whereExists(function ($query) {
@@ -55,7 +58,24 @@ class ClassModel extends Model
         if(FacadesRequest::get('date')){
             $class = $class->whereDate('class.created_at','=',FacadesRequest::get('date'));
         }
-        $class = $class->paginate(5)->withQueryString();;
+        $class = $class->paginate(10)->withQueryString();
         return $class;
     }
+    static function getClassTeacher(){
+        $teacher = self::join('users', 'users.id', 'class.created_by')
+                    ->whereExists(function ($query) {
+                        $query->select(DB::raw(1))
+                            ->from('class_teacher')
+                            ->whereRaw('class_teacher.class_id = class.id');
+                    })
+                    ->orderBy('created_at', 'desc')
+                    ->select('class.*', 'users.name as user_name');
+        if(FacadesRequest::get('class')){
+            $teacher = $teacher->where('class.name','like','%'.FacadesRequest::get('class').'%');
+        }
+        $teacher = $teacher->paginate(10)->withQueryString();
+
+        return $teacher;
+    }
+
 }

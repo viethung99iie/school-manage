@@ -22,12 +22,6 @@ class AssignSubject extends Model
                         ->join('subjects','subjects.id','class_subject.subject_id')
                         ->join('class','class.id','class_subject.class_id')
                         ->orderBy('class_subject.id','desc');
-        // if(FacadesRequest::get('name')){
-        //     $class = $class->where('class.name','like','%'.FacadesRequest::get('name').'%');
-        // }
-        // if(FacadesRequest::get('date')){
-        //     $class = $class->whereDate('class.created_at','=',FacadesRequest::get('date'));
-        // }
         $assign = $assign->paginate(5)->withQueryString();;
         return $assign;
         }
@@ -40,6 +34,16 @@ class AssignSubject extends Model
         }
         static function deleteSubject($class_id){
             return self::where('class_id',$class_id)->delete();
+        }
+
+
+         static function getMySubject($class_id){
+            $assign =  self::select('subjects.name as subject_name','subjects.type as subject_type','subjects.id as subject_id', 'class_subject.class_id as class_id')
+                        ->join('subjects','subjects.id','class_subject.subject_id')
+                        ->where('class_id','=',$class_id)
+                        ->orderBy('class_subject.id','desc')
+                        ->get();
+        return $assign;
         }
 
 }

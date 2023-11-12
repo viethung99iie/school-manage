@@ -111,4 +111,12 @@ class ParentController extends Controller
          $student->save();
          return redirect()->back()->withInput()->with('success','Cập nhật thành công!');
     }
+
+    // parent side
+
+    public function myStudentParent($id){
+            $this->data['title'] = 'Sinh viên của tôi';
+            $this->data['my_students'] = Student::getMyStudentByID($id);
+        return view('parent.my_student',$this->data);
+    }
 }

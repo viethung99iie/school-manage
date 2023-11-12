@@ -3,16 +3,6 @@
 {{$title}}
 @endsection
 @section('content')
-<style>
-    .avatar{
-        width: 70px;
-        height: 70px;
-        object-fit: contain
-    }
-</style>
-
-<div class="p-2">
-    @include('message')
 <div class="card mb-3">
     <div class="card-header pb-0 d-flex">
         <div class="col-7">
@@ -67,30 +57,29 @@
            </div>
     </form>
 </div>
-  <div class='card mb-3'>
+<div class='card mb-3'>
         <div class="row">
             <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                <h6>{{$title}}</h6>
+                <h6>Danh sách học sinh lớp {{$class_name}} ( Số lượng: {{$students->total()}})</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0 ">
-      <thead >
-        <tr>
+                    <table class="table align-items-center mb-0">
+                    <thead >
+        <tr class="">
           <th  class=" text-dark text-xs font-weight-bolder opacity-9">Sinh Viên</th>
            <th  class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">MSV</th>
             <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Lớp</th>
              <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Giới tính</th>
              <th class="text-dark text-xs font-weight-bolder opacity-9 ps-2">Ngày nhập học</th>
-          <th class="text-dark  font-weight-bolder opacity-9 ps-2">Hành động</th>
+          <th class="text-dark text-sm font-weight-bolder opacity-9 ps-2">Hành động</th>
         </tr>
       </thead>
-      <tbody>
-         @foreach ($students as $item)
-            <tr>
-            <td>
+            <tbody>
+            @foreach ($students as $item)
+                                <td>
                 <div class="d-flex px-2 py-1">
                 <div>
                      @if ($item->user_avatar!=null)
@@ -100,7 +89,7 @@
                     @endif
                 </div>
                 <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 ">{{$item->user_name}}</h6>
+                    <h6 class="mb-0 text-sm">{{$item->user_name}}</h6>
                     <p class="text-xs text-secondary mb-0">{{$item->user_email}}</p>
                 </div>
                 </div>
@@ -123,33 +112,31 @@
 
           <td class="align-middle text-center">
             <div class="d-flex align-items-center">
-              <span class=" text-secondary me-2 ">{{$item->date_admission}}</span>
+              <span class=" text-secondary me-2 text-sm">{{$item->date_admission}}</span>
             </div>
           </td>
 
           <td class="align-middle">
             <div class="ms-auto text-start">
                 {{-- xóa --}}
-                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('admins.student.delete', ['id'=>$item->id])}}">
-                    <i class="far fa-trash-alt me-2"></i>Xóa
-                </a>
-                {{-- sửa --}}
-                <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('admins.student.edit', ['id'=>$item->id])}}">
-                    <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
+                <a class="btn btn-primary" href="{{ route('parents.student.subject', ['id'=>$item->id])}}">
+                   Môn học
                 </a>
             </div>
         </tr>
         @endforeach
-      </tbody>
-    </table>
+
+                    </tbody>
+                    </table>
+
                 </div>
                 </div>
-                <div class="row">
-                    <div class="d-flex justify-content-center text-white">{{$students->links()}}</div>
-                </div>
+                 <div class="row">
+    <div class="d-flex justify-content-center text-white">{{$students->links()}}</div>
+</div>
             </div>
             </div>
         </div>
+
     </div>
-   </div>
 @endsection

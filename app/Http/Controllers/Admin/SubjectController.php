@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\AssignSubject;
+use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends Controller
 {
@@ -19,7 +21,7 @@ class SubjectController extends Controller
     }
     public function create(){
         $this->data['title'] = 'Thêm môn học';
-        return view('admin.subject.create');
+        return view('admin.subject.create',$this->data);
     }
     public function store(Request $request){
         $rulers = [
@@ -81,5 +83,25 @@ class SubjectController extends Controller
               return redirect()->route('admins.subject.list')->with('success','Xóa môn học thành công!');
          }
            return redirect()->route('admins.subject.list')->with('danger','Vui lòng thao tác lại!');
+        }
+
+// student side
+
+        public function mySubject(){
+             $this->data['title'] = 'Môn học của tôi';
+             $student = Student::find(Auth::user()->student_id);
+              $this->data['subjects'] = AssignSubject::getMySubject($student->class_id);
+            return view('student.my_subject',$this->data);
+        }
+
+// parent side
+
+         public function myStudentSubject($student_id){
+            $this->data['title'] = 'Môn học con tôi';
+            $student = Student::getStudentByID($student_id);
+            $this->data['student_name'] =  $student->user_name;
+            $this->data['subjects'] = AssignSubject::getMySubject($student->class_id);
+            $this->data['class_id'] = $student->class_id;
+            return view('parent.subject_student',$this->data);
         }
 }

@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ClassTeacherController;
+use App\Http\Controllers\Admin\ClassTimeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -81,6 +83,23 @@ Route::name('admins.')
         Route::post('/admin/assign_subject/update',[AssignSubjectController::class, 'update'])->name('assign_subject.update');
         Route::get('/admin/assign_subject/delete/{id}',[AssignSubjectController::class, 'delete'])->name('assign_subject.delete');
 
+        // Đăng ký lịch học
+        Route::get('/admin/class_timetable/list',[ClassTimeController::class, 'index'])->name('class_timetable.list');
+        Route::post('/admin/class_timetable/get_subject',[ClassTimeController::class, 'getSubject'])->name('class_timetable.create');
+        Route::post('/admin/class_timetable/store',[ClassTimeController::class, 'store'])->name('class_timetable.store');
+        // Route::get('/admin/class_timetable/edit/{id}',[ClassTimeController::class, 'edit'])->name('class_timetable.edit');
+        // Route::post('/admin/class_timetable/update',[ClassTimeController::class, 'update'])->name('class_timetable.update');
+        Route::get('/admin/class_timetable/delete-all/{class_id}&{subject_id}',[ClassTimeController::class, 'deleteAll'])->name('class_timetable.delete_all');
+        Route::get('/admin/class_timetable/delete/{class_id}&{subject_id}&{week_id}',[ClassTimeController::class, 'delete'])->name('class_timetable.delete');
+
+        // Giáo viên chủ nhiệm
+        Route::get('/admin/class_teacher/list',[ClassTeacherController::class, 'index'])->name('class_teacher.list');
+        Route::get('/admin/class_teacher/create',[ClassTeacherController::class, 'create'])->name('class_teacher.create');
+        Route::post('/admin/class_teacher/store',[ClassTeacherController::class, 'store'])->name('class_teacher.store');
+        Route::get('/admin/class_teacher/edit/{id}',[ClassTeacherController::class, 'edit'])->name('class_teacher.edit');
+        Route::post('/admin/class_teacher/update',[ClassTeacherController::class, 'update'])->name('class_teacher.update');
+        Route::get('/admin/class_teacher/delete/{id}',[ClassTeacherController::class, 'delete'])->name('class_teacher.delete');
+
          // Học sinh
         Route::get('/admin/student/list',[StudentController::class, 'index'])->name('student.list');
         Route::get('/admin/student/create',[StudentController::class, 'create'])->name('student.create');
@@ -101,6 +120,10 @@ Route::name('admins.')
         Route::get('/admin/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
     Route::get('/admin/parent/not-my-student/{id}',[ParentController::class, 'notMyStudent'])->name('parent.not-my-student');
     });
+
+
+
+
 // teacher routes
 Route::name('teachers.')->middleware('teacher')->group(function () {
 
@@ -113,18 +136,37 @@ Route::name('teachers.')->middleware('teacher')->group(function () {
         Route::post('teacher/profile/change_avatar', [TeacherProfileController::class,'changeAvatarTeacher'])->name('profile.change_avatar');
         Route::post('teacher/profile/change_password', [TeacherProfileController::class,'changePassTeacher'])->name('profile.change_password');
 
+    // lớp giảng dạy
+        Route::get('teacher/my_class_subject', [ClassTeacherController::class,'MyClassSubject'])->name('class-subject');
+        Route::get('my_student/{class_id}', [ClassTeacherController::class,'MyStudent'])->name('my_student');
+
+     // timetable
+        Route::get('teacher/class_timetable/{class_id}&{subject_id}',[ClassTimeController::class, 'teacherTime'])->name('class_timetable');
 });
+
+
+
+
 // student routes
 Route::name('students.')->middleware('student')->group(function () {
     Route::get('student/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
- // Profile
+        // Profile
         Route::get('student/profile', [StudentProfileController::class,'index'])->name('profile');
         Route::get('/studentv/profile/edit/{id}',[StudentProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/student/profile/update',[StudentProfileController::class, 'update'])->name('profile.update');
         Route::post('student/profile/change_avatar', [StudentProfileController::class,'changeAvatar'])->name('profile.change_avatar');
         Route::post('student/profile/change_password', [StudentProfileController::class,'changePass'])->name('profile.change_password');
+
+        // my subject
+   Route::get('student/my-subject', [SubjectController::class,'mySubject'])->name('my_subject');
+
+        // timetable
+        Route::get('/student/class_timetable',[ClassTimeController::class, 'myClassTime'])->name('class_timetable');
 });
+
+
+
 
 // parent routes
 Route::name('parents.')->middleware('parent')->group( function () {
@@ -136,5 +178,14 @@ Route::name('parents.')->middleware('parent')->group( function () {
     Route::post('/parent/profile/update',[ParentProfileController::class, 'update'])->name('profile.update');
     Route::post('parent/profile/change_avatar', [ParentProfileController::class,'changeAvatar'])->name('profile.change_avatar');
     Route::post('parent/profile/change_password', [ParentProfileController::class,'changePass'])->name('profile.change_password');
+
+    // my student
+
+    Route::get('my-student/{id}',[ParentController::class, 'myStudentParent'])->name('my-student');
+    Route::get('my-student/subject/{id}',[SubjectController::class, 'myStudentSubject'])->name('student.subject');
+    Route::get('my-student/class_timetable/{class_id}&{subject_id}',[ClassTimeController::class, 'myStudentTime'])->name('class_timetable');
+        // Route::get('/parent/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
+
+    // timetable
 
 });
