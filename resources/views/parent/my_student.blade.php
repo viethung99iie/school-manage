@@ -64,9 +64,14 @@
 
           <td class="align-middle">
             <div class="ms-auto text-start">
-                {{-- xóa --}}
-                <a class="btn btn-primary" href="{{ route('parents.student.subject', ['id'=>$item->id])}}">
+                <a class="btn btn-success" href="{{ route('parents.student.subject', ['id'=>$item->id])}}">
                    Môn học
+                </a>
+                <a class="btn btn-primary" href="{{ route('parents.exam_timetable', ['student_id'=>$item->id])}}">
+                   Lịch thi
+                </a>
+                <a class="btn btn-warning" href="{{ route('parents.calendar', ['student_id'=>$item->id])}}">
+                    Thời khóa biểu
                 </a>
             </div>
         </tr>

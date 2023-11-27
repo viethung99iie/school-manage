@@ -74,6 +74,11 @@ class User extends Authenticatable
             $user = User::find($request->user_id);
             $user->profile_pic = $imageProduct;
             $user->save();
+        }
 
+        static function findStudent($student_id){
+            return self::select('users.name as student_name')
+                        ->where('student_id', $student_id)
+                        ->first();
         }
     }

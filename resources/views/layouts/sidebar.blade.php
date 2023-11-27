@@ -1,3 +1,8 @@
+      <style>
+        .navbar-vertical .navbar-brand>img, .navbar-vertical .navbar-brand-img {
+    max-height: 3rem;
+}
+      </style>
       <aside
       class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
       id="sidenav-main"
@@ -9,16 +14,16 @@
           id="iconSidenav"
         ></i>
         <a
-          class="navbar-brand m-0"
+          class="navbar-brand m-0 "
           href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
           target="_blank"
         >
-          <img
-            src="./assets/img/logo-ct-dark.png"
+            <img
+            src="{{ asset('image/'.Auth::user()->profile_pic) }}"
             class="navbar-brand-img h-100"
             alt="main_logo"
           />
-          <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
+          <span class="ms-1 font-weight-bold">{{Auth::user()->name}}</span>
         </a>
       </div>
       <hr class="horizontal dark mt-0" />

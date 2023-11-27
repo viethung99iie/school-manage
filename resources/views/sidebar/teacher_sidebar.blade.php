@@ -19,6 +19,28 @@
                         <span class="nav-link-text ms-1">Lớp giảng dạy</span>
                     </a>
             </li>{{-- end class teacher --}}
+            {{-- exam   --}}
+            <li class="nav-item ">
+                    <a class="nav-link @if (Request::segment(2)=='exam_timetable')
+            active
+            @endif" href="{{route('teachers.exam_timetable')}}">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Lịch thi</span>
+                    </a>
+            </li>{{-- end exam --}}
+            {{-- calendar   --}}
+            <li class="nav-item ">
+                    <a class="nav-link @if (Request::segment(2)=='calendar')
+            active
+            @endif" href="{{route('teachers.calendar')}}">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Lịch giảng dạy</span>
+                    </a>
+            </li>{{-- end calendar --}}
         {{-- profile --}}
             <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

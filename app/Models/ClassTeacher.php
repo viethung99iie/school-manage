@@ -22,13 +22,24 @@ class ClassTeacher extends Model
                         ->paginate(100)->withQueryString();
         return $assign;
         }
-    //  static function  getClassSubject($teacher_id){
-    //     $assign =  self::select('class_teacher.*','class.name as class_name')
-    //                     ->join('class','class.id','class_teacher.class_id')
-    //                     ->where('class_teacher.teacher_id',$teacher_id)
-    //                     ->paginate(100)->withQueryString();
-    //     return $assign;
-    //     }
+
+        static function getCalendarTeacher($teacher_id){
+            return self::select('class_subject_time.*','class.name as class_name','subjects.name as subject_name','weeks.name as week_name','weeks.fullcalendar_day as week_fullcalendar_day')
+                        ->join('class','class.id','class_teacher.class_id')
+                        ->join('class_subject', 'class_subject.class_id',  'class.id')
+                        ->join('class_subject_time', 'class_subject_time.subject_id',  'class_subject.subject_id')
+                        ->join('subjects', 'subjects.id', 'class_subject.subject_id')
+                        ->join('weeks', 'weeks.id',  'class_subject_time.week_id')
+                        ->where('class_teacher.teacher_id',$teacher_id)
+                        ->get();
+        }
+        static function getClassSubjectGroup($teacher_id){
+            $assign = self::select('class_teacher.*','class.name as class_name','class.id as class_id')
+                    ->join('class','class.id','class_teacher.class_id')
+                    ->where('class_teacher.teacher_id',$teacher_id)
+                    ->get();
+            return $assign;
+            }
         static function existClassTeacher($class_id,$teacher_id){
             return self::where('class_id',$class_id)->where('teacher_id',$teacher_id)->first();
         }

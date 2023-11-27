@@ -5,7 +5,7 @@
 @section('content')
  <div class="card py-2">
     <div class="card-header pb-0">
-                <h6>Môn học của tôi</h6>
+                <h6>{{$title}}</h6>
                 </div>
     <table class="table align-items-center mb-0 ">
       <thead >

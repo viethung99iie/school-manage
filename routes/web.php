@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ClassTeacherController;
 use App\Http\Controllers\Admin\ClassTimeController;
+use App\Http\Controllers\Admin\ExaminationController;
+use App\Http\Controllers\Admin\CalendarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -119,7 +121,34 @@ Route::name('admins.')
         Route::get('/admin/parent/my-student/{id}',[ParentController::class, 'myStudent'])->name('parent.my-student');
         Route::get('/admin/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
     Route::get('/admin/parent/not-my-student/{id}',[ParentController::class, 'notMyStudent'])->name('parent.not-my-student');
+
+        // Kì thi
+        Route::get('examinations/exam/list',[ExaminationController::class, 'index'])->name('examinations.exam.list');
+        Route::get('examinations/exam/create',[ExaminationController::class, 'create'])->name('examinations.exam.create');
+        Route::post('examinations/exam/store',[ExaminationController::class, 'store'])->name('examinations.exam.store');
+        Route::get('examinations/exam/edit/{id}',[ExaminationController::class, 'edit'])->name('examinations.exam.edit');
+        Route::post('examinations/exam/update',[ExaminationController::class, 'update'])->name('examinations.exam.update');
+        Route::get('examinations/exam/delete/{id}',[ExaminationController::class, 'delete'])->name('examinations.exam.delete');
+
+        // Đăng kí lịch thi
+        Route::get('examinations/schedule',[ExaminationController::class, 'schedule'])->name('examinations.schedule');
+        Route::post('examinations/schedule/store',[ExaminationController::class, 'scheduleStore'])->name('examinations.schedule.store');
+        Route::get('examinations/schedule/delete-all/{exam_id}&{class_id}',[ExaminationController::class, 'scheduleDeleteAll'])->name('schedule.delete_all');
+        Route::get('/examinations/schedule/delete/{exam_id}&{class_id}&{subject_id}',[ExaminationController::class, 'scheduleDelete'])->name('schedule.delete');
+
+        // Đăng ký điểm thi
+        Route::get('examinations/mark_register',[ExaminationController::class, 'mark_register'])->name('examinations.mark_register');
+        Route::post('examinations/store_mark',[ExaminationController::class, 'store_mark'])->name('examinations.store_mark');
+        Route::post('examinations/store_mark_single',[ExaminationController::class, 'store_mark_single'])->name('examinations.store_mark_single');
+
     });
+
+
+
+
+
+
+
 
 
 
@@ -142,7 +171,18 @@ Route::name('teachers.')->middleware('teacher')->group(function () {
 
      // timetable
         Route::get('teacher/class_timetable/{class_id}&{subject_id}',[ClassTimeController::class, 'teacherTime'])->name('class_timetable');
+
+        // exam time table
+        Route::get('teacher/exam_timetable',[ExaminationController::class, 'MyExamTimeTableTeacher'])->name('exam_timetable');
+
+        // calendar
+        Route::get('teacher/calendar',[CalendarController::class, 'myCalendarTeacher'])->name('calendar');
 });
+
+
+
+
+
 
 
 
@@ -163,7 +203,18 @@ Route::name('students.')->middleware('student')->group(function () {
 
         // timetable
         Route::get('/student/class_timetable',[ClassTimeController::class, 'myClassTime'])->name('class_timetable');
+
+        // exam time table
+        Route::get('student/exam_timetable',[ExaminationController::class, 'MyExamTimeTable'])->name('exam_timetable');
+
+        // calendar
+        Route::get('student/my_calendar',[CalendarController::class, 'MyCalendar'])->name('my_calendar');
 });
+
+
+
+
+
 
 
 
@@ -184,8 +235,10 @@ Route::name('parents.')->middleware('parent')->group( function () {
     Route::get('my-student/{id}',[ParentController::class, 'myStudentParent'])->name('my-student');
     Route::get('my-student/subject/{id}',[SubjectController::class, 'myStudentSubject'])->name('student.subject');
     Route::get('my-student/class_timetable/{class_id}&{subject_id}',[ClassTimeController::class, 'myStudentTime'])->name('class_timetable');
-        // Route::get('/parent/parent/assign_student/{parent_id}/{student_id}',[ParentController::class, 'assignStudent'])->name('parent.assign-student');
 
-    // timetable
+    // exam time table
+        Route::get('my-student/subject/exam_timetable/{student_id}',[ExaminationController::class, 'MyStudentExamTimeTable'])->name('exam_timetable');
 
+        // calendar
+        Route::get('my-student/my_calendar/{student_id}',[CalendarController::class, 'myStudentCalendar'])->name('calendar');
 });

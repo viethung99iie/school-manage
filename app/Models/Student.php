@@ -43,8 +43,6 @@ class Student extends Model
         return $student;
         }
 
-
-
         // Tìm sinh viên bằng id của phụ huynh
         static function getMyStudentByID($id){
              return self::select('students.*','class.name as class_name','users.name as user_name','users.email as user_email','users.id as user_id')
@@ -155,6 +153,18 @@ class Student extends Model
 
         static function getStudentInClass($class_id){
              return self::select('students.*','users.name as user_name','users.email as user_email','users.id as user_id', 'class.name as class_name')
+        ->join('class','class.id','students.class_id')
+        ->join('users','users.student_id','students.id')
+        ->orderBy('users.created_at','desc')
+        ->where('students.class_id',$class_id)
+        ->where('users.is_deleted',0)
+        ->paginate(8)->withQueryString();
+        }
+
+        // danh sách sinh viên trong lớp
+
+        static function getStudentClass($class_id){
+             return self::select('students.*','users.name as user_name')
         ->join('class','class.id','students.class_id')
         ->join('users','users.student_id','students.id')
         ->orderBy('users.created_at','desc')

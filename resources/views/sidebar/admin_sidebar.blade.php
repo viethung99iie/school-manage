@@ -53,7 +53,7 @@
                     <span class="nav-link-text ms-1">Phụ huynh</span>
                 </a>
         </li>{{-- end parent --}}
-        <li class="nav-item">
+<li class="nav-item">
    <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link @if (
     Request::segment(2)=='class'||
     Request::segment(2)=='subject'||
@@ -132,8 +132,54 @@ show @endif" id="applicationsExamples">
       </ul>
    </div>
 </li>
-
-
+<li class="nav-item">
+   <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link @if (
+    Request::segment(1)=='examinations')
+active @endif" aria-controls="ecommerceExamples" role="button" aria-expanded="false">
+      <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+         <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
+      </div>
+      <span class="nav-link-text ms-1">Thi cử</span>
+   </a>
+   <div class="collapse @if (
+    Request::segment(1)=='examinations')
+show @endif" id="ecommerceExamples">
+   <ul class="nav ms-4">
+            {{-- exam --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='exam')
+                active
+                @endif" href="{{route('admins.examinations.exam.list')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Kì thi</span>
+                </a>
+            </li>{{-- endexam --}}
+            {{-- lịch thi --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='exam')
+                active
+                @endif" href="{{route('admins.examinations.schedule')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Lịch thi</span>
+                </a>
+            </li>{{-- lịch thi --}}
+            {{-- lịch thi --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='mark_register')
+                active
+                @endif" href="{{route('admins.examinations.mark_register')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Nhập điểm thi</span>
+                </a>
+            </li>{{-- lịch thi --}}
+ </div>
+</li>
         {{-- profile --}}
         <li class="nav-item mt-3 ">
             <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
@@ -154,4 +200,5 @@ show @endif" id="applicationsExamples">
                 </div>
                 <span class="nav-link-text ms-1">Đăng xuất</span>
             </a>
-        </li>{{-- end profile --}}
+            </li>
+            {{-- end profile --}}
