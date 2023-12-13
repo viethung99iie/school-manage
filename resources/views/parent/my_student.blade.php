@@ -73,6 +73,9 @@
                 <a class="btn btn-warning" href="{{ route('parents.calendar', ['student_id'=>$item->id])}}">
                     Thời khóa biểu
                 </a>
+                <a class="btn btn-primary" href="{{ route('parents.exam_result', ['student_id'=>$item->id])}}">
+                    Kết quả học tập
+                </a>
             </div>
         </tr>
         @endforeach

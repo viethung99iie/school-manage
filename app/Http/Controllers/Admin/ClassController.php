@@ -34,6 +34,7 @@ class ClassController extends Controller
 
         $class = new ClassModel();
         $class->name = $request->name;
+        $class->amount = $request->amount;
         $class->status = $request->status;
         $class->created_by = 1;
         $class->save();
@@ -61,6 +62,7 @@ class ClassController extends Controller
 
         $class = ClassModel::find($id);
         $class->name = $request->name;
+        $class->amount = $request->amount;
         $class->status = $request->status;
         $class->created_by = 1;
         $class->save();

@@ -42,6 +42,9 @@ class ClassModel extends Model
         {
             return $this->belongsToMany(Teacher::class, 'class_teacher', 'class_id', 'teacher_id');
         }
+        static function getTotalClass(){
+          return   self::count();
+        }
     static function getRecordAssign(){
         $class = self::join('users', 'users.id', 'class.created_by')
                     ->whereExists(function ($query) {

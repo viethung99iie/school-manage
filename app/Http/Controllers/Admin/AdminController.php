@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,27 @@ use Illuminate\Support\Facades\Redis;
 class AdminController extends Controller
 {
     public $data =[];
+
+    public function setting(){
+         $this->data['title'] = 'Cài đặt hệ thống';
+         $this->data['setting'] = Setting::find(1)->paypal_email;
+        return view('admin.setting',$this->data);
+    }
+    public function Updatesetting(Request $request){
+        $rulers = [
+            'paypal_email' =>'required|email',
+        ];
+        $messages = [
+            'paypal_email.required' =>'email bắt buộc phải nhập!!',
+            'paypal_email.email' =>'email không đúng định dạng!',
+        ];
+        $request->validate($rulers,$messages);
+
+        $setting = Setting::find(1);
+        $setting->paypal_email = $request->paypal_email;
+        $setting->save();
+        return redirect()->back()->with('success','Cập nhật thành công!');
+    }
 
     public function index(){
          $this->data['title'] = 'Danh sách quản trị viên';

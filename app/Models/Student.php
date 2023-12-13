@@ -13,6 +13,28 @@ class Student extends Model
 
     protected $table = 'students';
 
+    // lấy học phí của học sinh
+    static function getCollectFeeStudent(){
+        $student =  self::select('students.*','class.name as class_name','class.amount as class_amount','users.name as user_name','users.email as user_email','users.profile_pic as user_avatar')
+        ->join('class','class.id','students.class_id')
+        ->join('users','users.student_id','students.id')
+        ->orderBy('users.created_at','desc')
+        ->where('users.user_type',3);
+        if(FacadesRequest::get('class_id')){
+            $student = $student->where('students.class_id',FacadesRequest::get('class_id'));
+        }
+        if(FacadesRequest::get('class_id')){
+            $student = $student->where('students.class_id',FacadesRequest::get('class_id'));
+        }
+        if(FacadesRequest::get('id_student')){
+            $student = $student->where('students.id_student','like','%'.FacadesRequest::get('id_student').'%');
+        }
+        if(FacadesRequest::get('name')){
+            $student = $student->where('users.name','like','%'.FacadesRequest::get('name').'%');
+        }
+        $student = $student->paginate(50)->withQueryString();;
+        return $student;
+        }
     // Lấy tất cả sinh viên
     static function getStudent(){
         $student =  self::select('students.*','class.name as class_name','users.email as user_email','users.name as user_name','users.id as user_id','users.profile_pic as user_avatar')
@@ -171,6 +193,11 @@ class Student extends Model
         ->where('students.class_id',$class_id)
         ->where('users.is_deleted',0)
         ->paginate(8)->withQueryString();
+        }
+
+        // kiểm tra điểm danh
+        static function getAttendance($student_id,$class_id,$attendance_date){
+            return StudentAttendance::checkAlreadyAttendance($student_id,$class_id,$attendance_date);
         }
 
 }

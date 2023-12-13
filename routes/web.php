@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin\AssignSubjectController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ParentController;
 use App\Http\Controllers\User\Teacher\ProfileController as TeacherProfileController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\Admin\ClassTeacherController;
 use App\Http\Controllers\Admin\ClassTimeController;
 use App\Http\Controllers\Admin\ExaminationController;
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\CommunicateController;
+use App\Http\Controllers\Admin\FeesCollectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -141,6 +144,37 @@ Route::name('admins.')
         Route::post('examinations/store_mark',[ExaminationController::class, 'store_mark'])->name('examinations.store_mark');
         Route::post('examinations/store_mark_single',[ExaminationController::class, 'store_mark_single'])->name('examinations.store_mark_single');
 
+        // Điểm danh học sinh
+        Route::get('attendance/student',[AttendanceController::class, 'attendanceStudent'])->name('attendance.student');
+        Route::post('attendance/student/save',[AttendanceController::class, 'attendanceStudentSubmit'])->name('attendance.student_save');
+
+        // repost
+         Route::get('attendance/report',[AttendanceController::class, 'attendanceReport'])->name('attendance.report');
+
+        // bảng thông báo
+        Route::get('communicate/notice_board',[CommunicateController::class, 'list'])->name('communicate.list');
+        Route::get('communicate/notice_board/create',[CommunicateController::class, 'create'])->name('communicate.create');
+         Route::post('communicate/notice_board/store',[CommunicateController::class, 'store'])->name('communicate.store');
+         Route::get('communicate/notice_board/edit/{id}',[CommunicateController::class, 'edit'])->name('communicate.edit');
+        Route::post('communicate/notice_board/update',[CommunicateController::class, 'update'])->name('communicate.update');
+        Route::get('communicate/notice_board/delete/{id}',[CommunicateController::class, 'delete'])->name('communicate.delete');
+
+
+        // send email
+        Route::get('communicate/send_email',[CommunicateController::class, 'sendEmail'])->name('communicate.send_email');
+        Route::post('communicate/send_email_user',[CommunicateController::class, 'sendEmailUser'])->name('communicate.send_email_user');
+
+          // học phí
+        Route::get('fee_collection/collect_fee',[FeesCollectionController::class, 'index'])->name('fee_collection.collect_fee');
+
+
+        // cài đặt hệ thông
+        Route::get('admin/setting',[AdminController::class, 'setting'])->name('setting');
+        Route::post('admin/setting/update',[AdminController::class, 'Updatesetting'])->name('update_setting');
+
+
+
+
     });
 
 
@@ -177,9 +211,24 @@ Route::name('teachers.')->middleware('teacher')->group(function () {
 
         // calendar
         Route::get('teacher/calendar',[CalendarController::class, 'myCalendarTeacher'])->name('calendar');
+
+         // Nhập điểm học phần
+        Route::get('teacher/mark_register',[ExaminationController::class, 'mark_register_teacher'])->name('mark_register');
+        Route::post('teacher/store_mark',[ExaminationController::class, 'store_mark'])->name('store_mark');
+        Route::post('teacher/store_mark_single',[ExaminationController::class, 'store_mark_single'])->name('store_mark_single');
+
+        // Điểm danh học sinh
+        Route::get('teacher/student',[AttendanceController::class, 'attendanceStudentTeacher'])->name('attendance.student');
+        Route::post('teacher/student/save',[AttendanceController::class, 'attendanceStudentSubmit'])->name('attendance.student_save');
+
+        // repost
+         Route::get('attendance/repost',[AttendanceController::class, 'attendanceReportTeacher'])->name('attendance.repost');
+
+         // bảng thông báo
+        Route::get('teacher/notice_board',[CommunicateController::class, 'myNoticeTeacher'])->name('notice_board');
+
+
 });
-
-
 
 
 
@@ -209,6 +258,26 @@ Route::name('students.')->middleware('student')->group(function () {
 
         // calendar
         Route::get('student/my_calendar',[CalendarController::class, 'MyCalendar'])->name('my_calendar');
+
+        // exam result
+        Route::get('student/exam_result',[ExaminationController::class, 'myExamResult'])->name('exam_result');
+
+
+        // bảng thông báo
+        Route::get('student/notice_board',[CommunicateController::class, 'myNoticeStudent'])->name('notice_board');
+
+        // học phí
+        Route::get('student/fee_collect',[FeesCollectionController::class, 'myFeeCollect'])->name('fee_collect');
+
+        // thanh toán paypal
+
+        Route::post('student/paypal',[FeesCollectionController::class, 'paypalStudent'])->name('paypal_student');
+
+        Route::get('student/paypal/payment_error',[FeesCollectionController::class, 'paymentError'])->name('paypal_error');
+
+        Route::get('student/paypal/payment_success',[FeesCollectionController::class, 'paymentSuccess'])->name('paypal_success');
+
+
 });
 
 
@@ -236,9 +305,17 @@ Route::name('parents.')->middleware('parent')->group( function () {
     Route::get('my-student/subject/{id}',[SubjectController::class, 'myStudentSubject'])->name('student.subject');
     Route::get('my-student/class_timetable/{class_id}&{subject_id}',[ClassTimeController::class, 'myStudentTime'])->name('class_timetable');
 
-    // exam time table
+        // exam time table
         Route::get('my-student/subject/exam_timetable/{student_id}',[ExaminationController::class, 'MyStudentExamTimeTable'])->name('exam_timetable');
 
         // calendar
         Route::get('my-student/my_calendar/{student_id}',[CalendarController::class, 'myStudentCalendar'])->name('calendar');
+
+        // calendar
+        Route::get('exam_result/{student_id}',[ExaminationController::class, 'myStudentResult'])->name('exam_result');
+
+        // bảng thông báo
+        Route::get('parent/notice_board',[CommunicateController::class, 'myNoticeParent'])->name('notice_board');
+
+
 });

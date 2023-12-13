@@ -45,5 +45,8 @@ static function getRecord(){
         public function Class(){
         return $this->belongsToMany(ClassModel::class,'class_subject','subject_id','class_id');
         }
+         static function getTotalSubject(){
+          return   self::count();
+        }
 
 }

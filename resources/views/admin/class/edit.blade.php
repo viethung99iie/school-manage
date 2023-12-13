@@ -20,8 +20,16 @@
                 @error('name')
                 <span style="color: red" class="text-sm">{{$message}}</span>
                 @enderror
-            {{-- status --}}
             </div>
+            {{-- amount --}}
+            <div class="form-group">
+                <label for="example-text-input" class="form-control-label text-sm">Học phí 1 kì (VNĐ)</label>
+                <input class="form-control" type="text" name="amount" value="{{$class->amount}}" placeholder="Nhập học phí..." >
+                @error('amount')
+                <span style="color: red" class="text-sm">{{$message}}</span>
+                @enderror
+            </div>
+            {{-- status --}}
             <div class="form-group">
                 <label for="exampleFormControlSelect1" class="text-sm">Trạng thái</label>
                 <select class="form-control " name="status">

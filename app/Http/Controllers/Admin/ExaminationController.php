@@ -20,6 +20,9 @@ class ExaminationController extends Controller
 
     public $data = [];
 
+
+
+
     public function index(){
          $this->data['title'] = 'Danh sách bài thi';
          $this->data['exams'] = Exam::getExams();
@@ -178,15 +181,39 @@ class ExaminationController extends Controller
             }
         return view('admin.examinations.mark_register',$this->data);
         }
+        public function mark_register_teacher(Request $request){
+             $this->data['title'] = 'Đăng ký điểm thi các môn';
+
+
+             $this->data['class'] = ClassTeacher::getClassSubjectGroup(Auth::user()->teacher_id);
+             $this->data['exams'] = ExamSchedule::getExamTeacher(Auth::user()->teacher_id);
+
+
+        if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
+        {
+            $this->data['subjects'] = ExamSchedule::getSubject($request->get('exam_id'),$request->get('class_id'));
+             $this->data['students'] = Student::getStudentClass($request->get('class_id'));
+            }
+             return view('teacher.mark_register',$this->data);
+        }
 
         public function store_mark(Request $request){
             if(!empty($request->mark)){
+                $validation = 0;
                 foreach($request->mark as $mark){
+
+                    $getExamSchedule = ExamSchedule::find($mark['id']);
+                    $full_mark = $getExamSchedule->full_mark;
                     $class_work = !empty($mark['class_work'])? $mark['class_work']:0;
                     $home_work = !empty($mark['home_work'])? $mark['home_work']:0;
                     $test_work = !empty($mark['test_work'])? $mark['test_work']:0;
                     $exam = !empty($mark['exam'])? $mark['exam']:0;
 
+                    $full_mark = !empty($mark['full_mark'])? $mark['full_mark']:0;
+                    $pass_mark = !empty($mark['pass_mark'])? $mark['pass_mark']:0;
+
+                    $total_mark = $class_work*0.1+$home_work*0.2+$test_work*0.2+$exam*0.5;
+                if($full_mark>=$total_mark){
                     $getMark = Mark::checkAlreadyMark($request->student_id,$request->exam_id,$request->class_id,$mark['subject_id']);
                     if(!empty($getMark)){
                          $saveMark = $getMark;
@@ -202,50 +229,60 @@ class ExaminationController extends Controller
                     $saveMark->home_work = $home_work;
                     $saveMark->test_work = $test_work;
                     $saveMark->exam = $exam;
+                    $saveMark->full_mark = $full_mark;
+                    $saveMark->pass_mark = $pass_mark;
 
                     $saveMark->save();
+                }else{
+                    $validation = 1;
                 }
-                $json['message'] = 'Mark saved successfully';
+                }
+                if($validation==0){
+                    $json['message'] = 'Cập nhật điểm hoàn tất!!';
+                }else{
+
+                    $json['message'] = 'Đã có vài sai sót vui lòng kiểm tra lại!!';
+                }
                 echo json_encode($json);
             }
         }
         public function store_mark_single(Request $request){
-            dd($request->all());
+            $id = $request->id;
+            $getExamSchedule = ExamSchedule::find($id);
+            $full_mark = $getExamSchedule->full_mark;
+            $class_work = !empty($request->class_work)? $request->class_work:0;
+            $home_work = !empty($request->home_work)? $request->home_work:0;
+            $test_work = !empty($request->test_work)? $request->test_work:0;
+            $exam = !empty($request->exam)? $request->exam:0;
+
+            $total_mark = $class_work*0.1+$home_work*0.2+$test_work*0.2+$exam*0.5;
+            if($full_mark>=$total_mark){
+                $getMark = Mark::checkAlreadyMark($request->student_id,$request->exam_id,$request->class_id,$request->subject_id);
+                    if(!empty($getMark)){
+                         $saveMark = $getMark;
+                    }else{
+                         $saveMark = new Mark();
+                         $saveMark->create_by = Auth::user()->id;
+                    }
+                    $saveMark->student_id = $request->student_id;
+                    $saveMark->class_id = $request->class_id;
+                    $saveMark->exam_id = $request->exam_id;
+                    $saveMark->subject_id = $request->subject_id;
+                    $saveMark->class_work = $class_work;
+                    $saveMark->home_work = $home_work;
+                    $saveMark->test_work = $test_work;
+                    $saveMark->exam = $exam;
+                    $saveMark->full_mark = $getMark->full_mark;
+                    $saveMark->pass_mark = $getMark->pass_mark;
+
+                    $saveMark->save();
+                    $json['message'] = 'Cập nhật điểm thành công!!';
+            }else{
+                    $json['message'] = 'Đã vượt quá điểm tối đa!!';
+            }
+
+                    echo json_encode($json);
         }
-
-// student work side
-    public function MyExamTimeTable(){
-        $this->data['title'] = 'Lịch thi của tôi';
-        $student = Student::find(Auth::user()->student_id);
-        $exam = ExamSchedule::getExam($student->class_id);
-        $result = [];
-        foreach ($exam as $itemE) {
-            $dataE = [];
-            $dataE['name'] = $itemE->exam_name;
-            $examArr[]= $dataE;
-            $schedule = ExamSchedule::getScheduleS($itemE->exam_id,$itemE->class_id);
-            $resultS = [];
-                foreach ($schedule as $valueS){
-                    $dataS= [];
-                    $dataS['subject_name'] = $valueS->subject_name;
-                    $dataS['exam_date'] = $valueS->exam_date;
-                    $dataS['start_time'] = $valueS->start_time;
-                    $dataS['end_time'] = $valueS->end_time;
-                    $dataS['room'] = $valueS->room;
-                    $dataS['full_mark'] = $valueS->full_mark;
-                    $dataS['pass_mark'] = $valueS->pass_mark;
-                        $resultS[] = $dataS;
-                }
-            $dataE['exam']= $resultS;
-            $result[] = $dataE;
-    }
-            $this->data['getRecord'] = $result;
-            return view('student.my_exam_table',$this->data);
-
-    }
-
-
-
 
 
     // teacher side work
@@ -312,5 +349,95 @@ class ExaminationController extends Controller
     }
             $this->data['getRecord'] = $result;
            return view('parent.my_exam_table',$this->data);
+    }
+
+    // student work side
+    public function MyExamTimeTable(){
+        $this->data['title'] = 'Lịch thi của tôi';
+        $student = Student::find(Auth::user()->student_id);
+        $exam = ExamSchedule::getExam($student->class_id);
+        $result = [];
+        foreach ($exam as $itemE) {
+            $dataE = [];
+            $dataE['name'] = $itemE->exam_name;
+            $examArr[]= $dataE;
+            $schedule = ExamSchedule::getScheduleS($itemE->exam_id,$itemE->class_id);
+            $resultS = [];
+                foreach ($schedule as $valueS){
+                    $dataS= [];
+                    $dataS['subject_name'] = $valueS->subject_name;
+                    $dataS['exam_date'] = $valueS->exam_date;
+                    $dataS['start_time'] = $valueS->start_time;
+                    $dataS['end_time'] = $valueS->end_time;
+                    $dataS['room'] = $valueS->room;
+                    $dataS['full_mark'] = $valueS->full_mark;
+                    $dataS['pass_mark'] = $valueS->pass_mark;
+                        $resultS[] = $dataS;
+                }
+            $dataE['exam']= $resultS;
+            $result[] = $dataE;
+    }
+            $this->data['getRecord'] = $result;
+            return view('student.my_exam_table',$this->data);
+
+    }
+
+    public function myExamResult(){
+        $result = [];
+        $getExam = Mark::getExam(Auth::user()->student_id);
+        foreach($getExam as $value){
+            $dataE = [];
+            $dataE['name'] = $value->exam_name;
+            $getExamSubject = Mark::getExamSubject($value->exam_id,Auth::user()->student_id);
+            $dataSubject = [];
+            foreach($getExamSubject as $exam){
+                    $dataS = [];
+                    $dataS['subject_name'] = $exam->subject_name;
+                    $dataS['class_work'] = $exam->class_work;
+                    $dataS['home_work'] = $exam->home_work;
+                    $dataS['test_work'] = $exam->test_work;
+                    $dataS['exam'] = $exam->exam;
+                    $dataS['full_mark'] = $exam->full_mark;
+                    $dataS['pass_mark'] = $exam->pass_mark;
+
+                    $dataSubject[] = $dataS;
+                }
+            $dataE['subject'] = $dataSubject;
+            $result[] = $dataE;
+        }
+        $this->data['getRecord'] = $result;
+        $this->data['title'] = 'Kết quả học tập';
+        return view('student.exam_result',$this->data);
+    }
+
+    // parent side
+
+    public function myStudentResult($student_id){
+         $result = [];
+        $getExam = Mark::getExam($student_id);
+        foreach($getExam as $value){
+            $dataE = [];
+            $dataE['name'] = $value->exam_name;
+            $getExamSubject = Mark::getExamSubject($value->exam_id,$student_id);
+            $dataSubject = [];
+            foreach($getExamSubject as $exam){
+                    $dataS = [];
+                    $dataS['subject_name'] = $exam->subject_name;
+                    $dataS['class_work'] = $exam->class_work;
+                    $dataS['home_work'] = $exam->home_work;
+                    $dataS['test_work'] = $exam->test_work;
+                    $dataS['exam'] = $exam->exam;
+                    $dataS['full_mark'] = $exam->full_mark;
+                    $dataS['pass_mark'] = $exam->pass_mark;
+
+                    $dataSubject[] = $dataS;
+                }
+            $dataE['subject'] = $dataSubject;
+            $result[] = $dataE;
+        }
+        $this->data['student_name'] = User::findStudent($student_id)->student_name;
+        $this->data['getRecord'] = $result;
+        $this->data['title'] = 'Kết quả học tập';
+        return view('parent.exam_result',$this->data);
     }
 }

@@ -139,7 +139,7 @@ active @endif" aria-controls="ecommerceExamples" role="button" aria-expanded="fa
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
          <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
       </div>
-      <span class="nav-link-text ms-1">Thi cử</span>
+      <span class="nav-link-text ms-1">Kì thi</span>
    </a>
    <div class="collapse @if (
     Request::segment(1)=='examinations')
@@ -167,7 +167,7 @@ show @endif" id="ecommerceExamples">
                     <span class="nav-link-text ms-1">Lịch thi</span>
                 </a>
             </li>{{-- lịch thi --}}
-            {{-- lịch thi --}}
+            {{-- điểm thi --}}
             <li class="nav-item ">
                 <a class="nav-link @if (Request::segment(2)=='mark_register')
                 active
@@ -177,19 +177,124 @@ show @endif" id="ecommerceExamples">
                     </div>
                     <span class="nav-link-text ms-1">Nhập điểm thi</span>
                 </a>
-            </li>{{-- lịch thi --}}
+            </li>{{-- điểm thi --}}
  </div>
 </li>
+<li class="nav-item">
+   <a data-bs-toggle="collapse" href="#authExamples" class="nav-link @if (
+    Request::segment(1)=='attendance')
+active @endif" aria-controls="authExamples" role="button" aria-expanded="false">
+      <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+      </div>
+      <span class="nav-link-text ms-1">Điểm danh </span>
+   </a>
+   <div class="collapse @if (
+    Request::segment(1)=='attendance')
+show @endif" id="authExamples">
+      <ul class="nav ms-4">
+         {{-- điểm danh học sinh  --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='student')
+                active
+                @endif" href="{{route('admins.attendance.student')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Điểm danh sinh viên</span>
+                </a>
+            </li>{{-- end điểm danh học sinh --}}
+            {{-- báo cáo điểm danh  --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='report')
+                active
+                @endif" href="{{route('admins.attendance.report')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Báo cáo điểm danh</span>
+                </a>
+            </li>{{-- end báo cáo điểm danh  --}}
+      </ul>
+   </div>
+</li>
+
+<li class="nav-item">
+   <a data-bs-toggle="collapse" href="#basicExamples" class="nav-link @if (
+    Request::segment(1)=='communicate')
+active @endif" aria-controls="basicExamples" role="button" aria-expanded="false">
+      <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+      </div>
+      <span class="nav-link-text ms-1">Hội thoại</span>
+   </a>
+   <div class="collapse @if (
+    Request::segment(1)=='communicate')
+show @endif" id="basicExamples">
+      <ul class="nav ms-4">
+         {{-- điểm danh học sinh  --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='notice_board')
+                active
+                @endif" href="{{route('admins.communicate.list')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Bảng thông báo</span>
+                </a>
+            </li>{{-- end điểm danh học sinh --}}
+            {{-- điểm danh học sinh  --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='send_email')
+                active
+                @endif" href="{{route('admins.communicate.send_email')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Gửi email</span>
+                </a>
+            </li>{{-- end điểm danh học sinh --}}
+      </ul>
+   </div>
+</li>
+<li class="nav-item">
+   <a data-bs-toggle="collapse" href="#vrExamples" class="nav-link @if (
+    Request::segment(1)=='fee_collection')
+active @endif" aria-controls="vrExamples" role="button" aria-expanded="false">
+      <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+      </div>
+      <span class="nav-link-text ms-1">Thu phí</span>
+   </a>
+   <div class="collapse @if (
+    Request::segment(1)=='fee_collection')
+show @endif" id="vrExamples">
+      <ul class="nav ms-4">
+         {{-- điểm danh học sinh  --}}
+            <li class="nav-item ">
+                <a class="nav-link @if (Request::segment(2)=='collect_fee')
+                active
+                @endif" href="{{route('admins.fee_collection.collect_fee')}}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Học phí</span>
+                </a>
+            </li>{{-- end điểm danh học sinh --}}
+      </ul>
+   </div>
+</li>
+{{-- end điểm danh  --}}
         {{-- profile --}}
         <li class="nav-item mt-3 ">
             <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
             </li>
             <li class="nav-item">
-            <a class="nav-link " href="./pages/profile.html">
+            <a class="nav-link " href="{{route('admins.setting')}}">
                 <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
                 </div>
-                <span class="nav-link-text ms-1">Profile</span>
+                <span class="nav-link-text ms-1">Cài đặt hệ thống</span>
             </a>
             </li>
             <li class="nav-item">

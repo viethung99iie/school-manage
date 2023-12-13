@@ -58,6 +58,15 @@ class ExamSchedule extends Model
                         ->orderBy('exams.id','asc')
                         ->get();
     }
+    static function getExamTeacher($teacher_id){
+         return  self::where('class_teacher.teacher_id', $teacher_id)
+                        ->select('exam_schedule.*','exams.name as exam_name')
+                        ->join('exams','exams.id','exam_schedule.exam_id')
+                        ->join('class_teacher','class_teacher.class_id','exam_schedule.class_id')
+                        ->groupBy('exam_schedule.exam_id')
+                        ->orderBy('exams.id','asc')
+                        ->get();
+    }
 
     static function getExamTimetable($teacher_id){
         return self::select('exam_schedule.*','class.name as class_name','subjects.name as subject_name' ,'exams.name as exam_name')

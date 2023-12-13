@@ -10,12 +10,12 @@
 <div class="card mb-3">
         <div class="card-header pb-0 d-flex">
         <div class="col-7">
-            <h6>Tìm kiếm bài thi</h6>
+            <h6>Tìm kiếm kì thi</h6>
         </div>
         <div class="col-5 text-end">
             <a class="btn bg-gradient-primary m-0 text-white" href="{{route('admins.examinations.exam.create')}}">
                 <i class="fas fa-plus">
-                </i>&nbsp;&nbsp;Thêm bài thi
+                </i>&nbsp;&nbsp;Thêm kì thi
             </a>
         </div>
         </div>

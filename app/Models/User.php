@@ -53,7 +53,7 @@ class User extends Authenticatable
         if(FacadesRequest::get('date')){
             $admin = $admin->whereDate('created_at','=',FacadesRequest::get('date'));
         }
-        $admin = $admin->paginate(5)->withQueryString();;
+        $admin = $admin->paginate(5)->withQueryString();
         return $admin;
         }
 
@@ -81,4 +81,11 @@ class User extends Authenticatable
                         ->where('student_id', $student_id)
                         ->first();
         }
+
+        static function getByUserType($user_type){
+            return self::
+                        where('user_type', $user_type)
+                        ->get();
+        }
+
     }

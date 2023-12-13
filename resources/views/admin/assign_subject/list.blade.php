@@ -107,6 +107,7 @@
                     <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
                 </a>
             </div>
+            </td>
         </tr>
         @endif
         @endforeach

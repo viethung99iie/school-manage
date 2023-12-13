@@ -16,4 +16,28 @@ class Mark extends Model
                     ->where('subject_id',$subject_id)
                     ->first();
       }
+
+       static function getExam($student_id){
+        return self::where('marks.student_id',$student_id)
+                    ->join('exams','exams.id','marks.exam_id')
+                    ->select('marks.*','exams.name as exam_name')
+                    ->groupBy('marks.exam_id')
+                    ->get();
+       }
+       static function getExamSubject($exam_id,$student_id){
+        return self::select('marks.*','exams.name as exam_name', 'subjects.name as subject_name')
+                    ->join('exams','exams.id','marks.exam_id')
+                    ->join('subjects', 'subjects.id','marks.subject_id')
+                    ->where('marks.student_id',$student_id)
+                    ->where('marks.exam_id',$exam_id)
+                    ->get();
+       }
+       static function getFeeCollectStudent(){
+        return self::select('marks.*','exams.name as exam_name','class.amount as amount')
+                    ->join('exams','exams.id','marks.exam_id')
+                    ->join('class','class.id', 'marks.class_id')
+                    ->groupBy('marks.exam_id')
+                    ->get();
+       }
+
 }

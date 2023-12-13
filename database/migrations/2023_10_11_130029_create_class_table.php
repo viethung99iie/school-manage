@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('class', function (Blueprint $table) {
             $table->id();
             $table->String('name');
+            $table->integer('amount');
             $table->integer('status')->default(0);
             $table->integer('created_by');
             $table->timestamps();

@@ -3,27 +3,21 @@
 {{$title}}
 @endsection
 @section('content')
-<style>
-    .pagination li a {
-    color: white;
-        }
-</style>
-<div class="card">
-
-  <div class="table-responsive p-4">
-        <div class="row d-flex justify-content-lg-end">
-            <div class="col-8">
-                <h2 class="text-center">Danh sách lớp</h2>
-            </div>
-            <div class="col-4 text-end">
+    @include('message')
+<div class="p-2">
+    <div class="card mb-3">
+        <div class="card-header pb-0 d-flex">
+        <div class="col-7">
+            <h6>Tìm kiếm lớp</h6>
+        </div>
+        <div class="col-5 text-end">
             <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.class.create')}}">
                 <i class="fas fa-plus">
                 </i>&nbsp;&nbsp;Thêm lớp
             </a>
-             </div>
         </div>
-        @include('message')
-    <form action="" method="GET" class="m-3">
+        </div>
+            <form action="" method="GET" class="mx-3">
            <div class="row">
             <div class="col-3">
                  <label for="example-text-input" class="form-control-label text-sm">Tên</label>
@@ -41,16 +35,26 @@
             </div>
            </div>
     </form>
-    <table class="table align-items-center mb-0 ">
-      <thead >
-        <tr class="table-primary">
-          <th width='10%' class="text-uppercase text-dark text-sm font-weight-bolder opacity-9">#</th>
+    </div>
+    <div class='card mb-3'>
+        <div class="row">
+            <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                <h6>{{$title}}</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-5">
+                     <thead >
+        <tr >
+            <th width='10%' class="text-uppercase text-dark text-sm font-weight-bolder opacity-9">#</th>
           <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Tên</th>
+          <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Học phí</th>
           <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Tạo bởi</th>
             <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Trạng thái</th>
           <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Ngày tạo</th>
           <th class="text-uppercase text-dark text-sm font-weight-bolder opacity-9 ps-2">Hành động</th>
-        </tr>
       </thead>
       <tbody>
         @foreach ($class as $item)
@@ -64,6 +68,9 @@
           </td>
           <td>
             <h5 class="mb-0 text-dark text-sm">{{$item->name}}</h5>
+          </td>
+          <td>
+            <h5 class="mb-0 text-dark text-sm">{{number_format($item->amount,0)}} VNĐ</h5>
           </td>
           <td>
             <span class="badge badge-dot me-4">
@@ -96,10 +103,16 @@
         </tr>
         @endforeach
       </tbody>
-    </table>
-    <div class="row">
-    <div class="d-flex justify-content-center text-white">{{$class->links()}}</div>
+        </table>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center text-white">{{$class->links()}}</div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
-  </div>
-   </div>
+
 @endsection
