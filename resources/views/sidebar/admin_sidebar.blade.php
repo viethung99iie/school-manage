@@ -62,7 +62,7 @@
     Request::segment(2)=='class_timetable')
 active @endif " aria-controls="applicationsExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="fa-solid fa-book text-primary text-sm opacity-10"></i>
+         <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Học tập</span>
    </a>
@@ -80,7 +80,7 @@ show @endif" id="applicationsExamples">
                 active
                 @endif" href="{{route('admins.class.list')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Lớp</span>
                 </a>
@@ -91,7 +91,7 @@ show @endif" id="applicationsExamples">
             active
             @endif" href="{{route('admins.subject.list')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Môn học</span>
                     </a>
@@ -102,7 +102,7 @@ show @endif" id="applicationsExamples">
             active
             @endif" href="{{route('admins.assign_subject.list')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Đăng ký môn học</span>
                     </a>
@@ -113,7 +113,7 @@ show @endif" id="applicationsExamples">
             active
             @endif" href="{{route('admins.class_timetable.list')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Đăng ký lịch học</span>
                     </a>
@@ -124,7 +124,7 @@ show @endif" id="applicationsExamples">
             active
             @endif" href="{{route('admins.class_teacher.list')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Giáo viên chủ nhiệm</span>
                     </a>
@@ -137,7 +137,7 @@ show @endif" id="applicationsExamples">
     Request::segment(1)=='examinations')
 active @endif" aria-controls="ecommerceExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
+         <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Kì thi</span>
    </a>
@@ -151,18 +151,18 @@ show @endif" id="ecommerceExamples">
                 active
                 @endif" href="{{route('admins.examinations.exam.list')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Kì thi</span>
                 </a>
             </li>{{-- endexam --}}
             {{-- lịch thi --}}
             <li class="nav-item ">
-                <a class="nav-link @if (Request::segment(2)=='exam')
+                <a class="nav-link @if (Request::segment(2)=='schedule')
                 active
                 @endif" href="{{route('admins.examinations.schedule')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Lịch thi</span>
                 </a>
@@ -173,7 +173,7 @@ show @endif" id="ecommerceExamples">
                 active
                 @endif" href="{{route('admins.examinations.mark_register')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="fa-solid fa-book me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Nhập điểm thi</span>
                 </a>
@@ -185,7 +185,7 @@ show @endif" id="ecommerceExamples">
     Request::segment(1)=='attendance')
 active @endif" aria-controls="authExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+         <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Điểm danh </span>
    </a>
@@ -199,7 +199,7 @@ show @endif" id="authExamples">
                 active
                 @endif" href="{{route('admins.attendance.student')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-badge  me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Điểm danh sinh viên</span>
                 </a>
@@ -210,7 +210,7 @@ show @endif" id="authExamples">
                 active
                 @endif" href="{{route('admins.attendance.report')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-badge  me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Báo cáo điểm danh</span>
                 </a>
@@ -224,7 +224,7 @@ show @endif" id="authExamples">
     Request::segment(1)=='communicate')
 active @endif" aria-controls="basicExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+         <i class="ni ni-chat-round text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Hội thoại</span>
    </a>
@@ -262,7 +262,7 @@ show @endif" id="basicExamples">
     Request::segment(1)=='fee_collection')
 active @endif" aria-controls="vrExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+         <i class="ni ni-money-coins text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Thu phí</span>
    </a>
@@ -276,7 +276,7 @@ show @endif" id="vrExamples">
                 active
                 @endif" href="{{route('admins.fee_collection.collect_fee')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-money-coins me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Học phí</span>
                 </a>

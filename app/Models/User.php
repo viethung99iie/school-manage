@@ -77,8 +77,20 @@ class User extends Authenticatable
         }
 
         static function findStudent($student_id){
-            return self::select('users.name as student_name')
-                        ->where('student_id', $student_id)
+            return self::
+                        where('student_id', $student_id)
+                        ->first();
+        }
+
+        static function findTeacher($teacher_id){
+            return self::
+                        where('teacher_id', $teacher_id)
+                        ->first();
+        }
+
+        static function findParent($parent_id){
+            return self::
+                        where('parent_id', $parent_id)
                         ->first();
         }
 
@@ -87,5 +99,7 @@ class User extends Authenticatable
                         where('user_type', $user_type)
                         ->get();
         }
+
+       
 
     }

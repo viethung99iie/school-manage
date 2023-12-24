@@ -28,13 +28,13 @@ class DashboardController extends Controller
                 return view('admin/dashboard',$this->data);
             }
             if(Auth::user()->user_type === 2){
-                 return view('teacher/dashboard');
+                 return redirect()->route('teachers.calendar');
             }
             if(Auth::user()->user_type === 3){
-                 return view('student/dashboard');
+                 return redirect()->route('students.my_calendar');
             }
             if(Auth::user()->user_type === 4){
-                 return view('parent/dashboard');
+                 return redirect()->route('parents.notice_board');
             }
     }
 

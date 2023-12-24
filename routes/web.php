@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ClassTeacherController;
 use App\Http\Controllers\Admin\ClassTimeController;
 use App\Http\Controllers\Admin\ExaminationController;
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\CommunicateController;
 use App\Http\Controllers\Admin\FeesCollectionController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,18 @@ Route::get('/reset/{token}',[AuthController::class,'reset'])->name('reset');
 Route::post('/reset/{token}',[AuthController::class,'postReset'])->name('postReset');
 
 // admin routes
+Route::name('chat.')
+    ->middleware('common')
+    ->group(function () {
+         Route::get('chat', [ChatController::class, 'chat'])->name('list');
+         Route::post('submit_message', [ChatController::class, 'submit'])->name('submit_message');
+         Route::post('get_chat_window', [ChatController::class, 'get_chat_window'])->name('get_chat_window');
+         Route::post('get_chat_search_user', [ChatController::class, 'get_chat_search_user'])->name('get_chat_search_user');
+
+    });
+
+
+// admin routes
 Route::name('admins.')
     ->middleware('admin')
     ->group(function () {
@@ -62,7 +75,7 @@ Route::name('admins.')
         Route::get('/admin/teacher/edit/{id}',[TeacherController::class, 'edit'])->name('teacher.edit');
          Route::post('/admin/teacher/update',[TeacherController::class, 'update'])->name('teacher.update');
         Route::get('/admin/teacher/delete/{id}',[TeacherController::class, 'delete'])->name('teacher.delete');
-        Route::post('admin/teacher/change_avatar', [ProfileController::class,'changeAvatar'])->name('teacher.change_avatar');
+        Route::post('admin/teacher/change_avatar', [TeacherProfileController::class,'changeAvatar'])->name('teacher.change_avatar');
 
         // Lớp học
         Route::get('/admin/class/list',[ClassController::class, 'index'])->name('class.list');
@@ -166,6 +179,8 @@ Route::name('admins.')
 
           // học phí
         Route::get('fee_collection/collect_fee',[FeesCollectionController::class, 'index'])->name('fee_collection.collect_fee');
+        Route::post('fee_collection/export_collect_fee',[FeesCollectionController::class, 'export_collect_fee'])->name('fee_collection.export_collect_fee');
+
 
 
         // cài đặt hệ thông

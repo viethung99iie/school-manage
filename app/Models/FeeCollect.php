@@ -11,7 +11,6 @@ class FeeCollect extends Model
     use HasFactory;
     protected $table = 'fee_collect';
 
-
     public static function checkFeeStudent($exam_id,$class_id,$student_id){
         return self::where('student_id',$student_id)
                     ->where('class_id',$class_id)
@@ -53,7 +52,7 @@ class FeeCollect extends Model
         if(Request::get('to_date')){
             $fee = $fee->where('fee_collect.created_at','<=',Request::get('to_date'));
         }
-        $fee = $fee->paginate(50)->withQueryString();;
+        $fee = $fee->paginate(50)->withQueryString();
         return $fee;
         }
 

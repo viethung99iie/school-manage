@@ -10,52 +10,52 @@
         object-fit: contain
     }
 </style>
-
-<div class="card">
-  <div class="table-responsive p-4">
-        <div class="row d-flex justify-content-lg-end">
-            <div class="col-8">
-                <h2 class="text-center">{{$title}}</h2>
-            </div>
-            <div class="col-4 text-end">
-            <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.parent.create')}}">
+<div class="p-2">
+    @include('message')
+<div class="card mb-3">
+    <div class="card-header pb-0 d-flex">
+        <div class="col-7">
+            <h6>Tìm kiếm phụ huynh</h6>
+        </div>
+        <div class="col-5 text-end">
+             <a class="btn bg-gradient-primary mb-0 text-white" href="{{route('admins.parent.create')}}">
                 <i class="fas fa-plus">
                 </i>&nbsp;&nbsp;Thêm phụ huynh
             </a>
-             </div>
         </div>
-           @include('message')
-    <form action="" method="GET" class="m-3">
+    </div>
+    <form action="" method="GET" class="mx-3">
            <div class="row">
             <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Tên</label>
+                 <label for="example-text-input" class="form-control-label">Tên</label>
                 <input type="text" name="name" class="form-control" placeholder="Từ khóa tìm kiếm..."
                 value="{{request()->name}}">
             </div>
             <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Email</label>
+                 <label for="example-text-input" class="form-control-label">Email</label>
                 <input type="text" name="email" class="form-control" placeholder="Từ khóa tìm kiếm..."
                 value="{{request()->email}}">
             </div>
-            <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Ngày sinh</label>
-                <input type="date" name="date_of_birth" class="form-control"
-                value="{{request()->date_of_birth}}"  min="01/01/2000" max="31/12/2023">
+            <div class="col-2">
+                 <label for="example-text-input" class="form-control-label ">Mã sinh viên</label>
+                <input type="text" name="student_id" class="form-control" placeholder="Từ khóa tìm kiếm..."
+                value="{{request()->student_id}}">
             </div>
-           </div>
-           <div class="row">
-            <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Mã sinh viên</label>
-                <input type="text" name="parent_id" class="form-control" placeholder="Từ khóa tìm kiếm..."
-                value="{{request()->parent_id}}">
-            </div>
-            <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Lớp</label>
+            <div class="col-2">
+                 <label for="example-text-input" class="form-control-label ">Lớp</label>
                 <input type="text" name="class" class="form-control" placeholder="Từ khóa tìm kiếm..."
                 value="{{request()->class}}">
             </div>
+
+           </div>
+           <div class="row">
             <div class="col-3">
-                 <label for="example-text-input" class="form-control-label text-sm">Ngày nhập học</label>
+                 <label for="example-text-input" class="form-control-label ">Ngày sinh</label>
+                <input type="date" name="date_of_birth" class="form-control"
+                value="{{request()->date_of_birth}}"  min="01/01/2000" max="31/12/2023">
+            </div>
+            <div class="col-3">
+                 <label for="example-text-input" class="form-control-label ">Ngày nhập học</label>
                 <input type="date" name="date_admission" class="form-control"
                 value="{{request()->date_admission}}">
             </div>
@@ -65,11 +65,20 @@
             </div>
            </div>
     </form>
-    <div class="table-responsive">
-            <table class="table align-items-center mb-0 ">
+</div>
+  <div class='card mb-3'>
+        <div class="row">
+            <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                <h6>{{$title}}</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0 ">
       <thead >
-        <tr class="table-primary">
-          <th  class=" text-dark text-xs font-weight-bolder opacity-9">Phụ huynh</th>
+        <tr>
+            <th  class=" text-dark text-xs font-weight-bolder opacity-9">Phụ huynh</th>
              <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Địa chỉ</th>
              <th class="text-dark text-xs font-weight-bolder opacity-9 ps-2">Ngày sinh</th>
              <th class=" text-dark text-xs font-weight-bolder opacity-9 ps-2">Giới tính</th>
@@ -119,17 +128,23 @@
                 <a class="btn btn-link text-dark px-1 mb-0" href="{{ route('admins.parent.edit', ['id'=>$item->id])}}">
                     <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
                 </a>
-
-
+                <a class="btn btn-link text-primary px-3 mb-0" href="{{url('chat?user_type=4&receiver_id='.$item->id)}}"><i class="ni ni-chat-round text-primary me-2" aria-hidden="true"></i>Gửi tin nhắn</a>
             </div>
         </tr>
         @endforeach
       </tbody>
     </table>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center text-white">{{$parents->links()}}</div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-    <div class="d-flex justify-content-center text-white">{{$parents->links()}}</div>
-</div>
-  </div>
    </div>
+
+
 @endsection
+

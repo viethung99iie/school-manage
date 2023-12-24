@@ -154,6 +154,7 @@
                     <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('admins.teacher.edit', ['id'=>$item->id])}}">
                         <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa
                     </a>
+                    <a class="btn btn-link text-primary px-3 mb-0" href="{{url('chat?user_type=2&receiver_id='.$item->id)}}"><i class="ni ni-chat-round text-primary me-2" aria-hidden="true"></i>Gửi tin nhắn</a>
                 </div>
             </td>
         </tr>

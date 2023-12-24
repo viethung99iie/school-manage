@@ -35,6 +35,7 @@
   <link href="{{asset("assets/css/nucleo-svg.css")}}" rel="stylesheet" />
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <!-- CSS Files -->
+  @yield('css')
   <link id="pagestyle" href="{{asset("assets/css/argon-dashboard.css?v=2.0.4")}}" rel="stylesheet" />
 </head>
 
@@ -42,7 +43,9 @@
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
 @include('layouts.sidebar')
   <main class="main-content position-relative border-radius-lg ">
+    @include('layouts.header')
      <div class="container-fluid py-4">
+
     @yield('content')
     </div>
   </main>

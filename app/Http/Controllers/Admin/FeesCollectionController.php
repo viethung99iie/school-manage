@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExportCollectFee;
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\Exam;
@@ -11,6 +12,8 @@ use App\Models\Setting;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Fakes\ExcelFake;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class FeesCollectionController extends Controller
@@ -110,4 +113,7 @@ class FeesCollectionController extends Controller
         }
     }
 
+    public function export_collect_fee(Request $request){
+           return  Excel::download(new ExportCollectFee,'HocPhi_'.date('d-m-y').'.xls');
+    }
 }

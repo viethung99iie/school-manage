@@ -7,6 +7,7 @@
 
 <div class="p-2">
     @include('message')
+
 <div class="card mb-3">
         <div class="card-header pb-0 d-flex">
         <div class="col-7">
@@ -46,7 +47,7 @@
   <div class='card mb-3'>
         <div class="row">
             <div class="col-12">
-            <div class="card mb-4">
+            <div class=" mb-4">
                 <div class="card-header pb-0">
                 <h6>{{$title}}</h6>
                 </div>
@@ -87,6 +88,7 @@
                  <div class="ms-auto text-start">
                     <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{ route('admins.admin.delete', ['id'=>$admin->id])}}"><i class="far fa-trash-alt me-2"></i>Xóa</a>
                     <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('admins.admin.edit', ['id'=>$admin->id])}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Sửa</a>
+                    <a class="btn btn-link text-primary px-3 mb-0" href="{{url('chat?receiver_id='.$admin->id)}}"><i class="ni ni-chat-round text-primary me-2" aria-hidden="true"></i>Gửi tin nhắn</a>
                   </div>
           </td>
         </tr>

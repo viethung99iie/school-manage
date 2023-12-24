@@ -66,10 +66,29 @@
     <div class='card mb-3'>
         <div class="row">
             <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header pb-0">
-                <h6>Danh sách sinh viên</h6>
-                </div>
+            <div class="card-header pb-0 d-flex">
+                    <div class="col-7 mt-2">
+                        <h6>Học phí đã nộp</h6>
+                    </div>
+                    <div class="col-5 text-end">
+                        <form
+                            action="{{route('admins.fee_collection.export_collect_fee')}}"
+                            method="post"
+                        >
+                            @csrf
+                            <button type="submit" class="btn btn-facebook mb-2 text-white"">
+                                <input type="hidden" name="name" value="{{request()->name}}">
+                                <input type="hidden" name="id_student" value="{{request()->id_student}}">
+                                <input type="hidden" name="class_id" value="{{request()->class_id}}">
+                                <input type="hidden" name="exam_id" value="{{request()->exam_id}}">
+                                <input type="hidden" name="from_date" value="{{request()->from_date}}">
+                                <input type="hidden" name="to_date" value="{{request()->to_date}}">
+                                <i class="fa-regular fa-file-excel"></i>
+                                </i>&nbsp;&nbsp;Xuất Excel
+                            </button>
+                        </form>
+                    </div>
+            </div>
                 <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
                      <table class="table align-items-center mb-0 ">

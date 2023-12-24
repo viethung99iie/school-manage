@@ -1,20 +1,10 @@
-            <li class="nav-item">
-                <a class="nav-link @if (Request::segment(2)=='dashboard')
-            active
-            @endif" href="{{route('teachers.dashboard')}}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
             {{-- assign class --}}
             <li class="nav-item ">
                     <a class="nav-link @if (Request::segment(2)=='my_class_subject')
             active
             @endif" href="{{route('teachers.class-subject')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-single-copy-04 me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Lớp giảng dạy</span>
                     </a>
@@ -25,7 +15,7 @@
             active
             @endif" href="{{route('teachers.exam_timetable')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-calendar-grid-58 me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Lịch thi</span>
                     </a>
@@ -36,22 +26,22 @@
             active
             @endif" href="{{route('teachers.calendar')}}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-calendar-grid-58 me-sm-1 text-primary text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Lịch giảng dạy</span>
                     </a>
             </li>{{-- end calendar --}}
             <li class="nav-item">
    <a data-bs-toggle="collapse" href="#authExamples" class="nav-link @if (
-    Request::segment(1)=='attendance')
+    Request::segment(1)=='attendance' || Request::segment(2)=='student')
 active @endif" aria-controls="authExamples" role="button" aria-expanded="false">
       <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-         <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
+         <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
       </div>
       <span class="nav-link-text ms-1">Điểm danh </span>
    </a>
    <div class="collapse @if (
-    Request::segment(1)=='attendance')
+    Request::segment(1)=='attendance'|| Request::segment(2)=='student')
 show @endif" id="authExamples">
       <ul class="nav ms-4">
          {{-- điểm danh học sinh  --}}
@@ -60,7 +50,7 @@ show @endif" id="authExamples">
                 active
                 @endif" href="{{route('teachers.attendance.student')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-badge me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Điểm danh sinh viên</span>
                 </a>
@@ -71,7 +61,7 @@ show @endif" id="authExamples">
                 active
                 @endif" href="{{route('teachers.attendance.repost')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-badge me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Báo cáo điểm danh</span>
                 </a>
@@ -86,15 +76,17 @@ show @endif" id="authExamples">
                 active
                 @endif" href="{{route('teachers.mark_register')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-user me-sm-1 text-primary text-sm opacity-10"></i>
+                    <i class="ni    ni-book-bookmark me-sm-1 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Nhập điểm thi</span>
                 </a>
             </li>{{-- điểm thi --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{route('teachers.notice_board')}}">
+                <a class="nav-link @if (Request::segment(2)=='notice_board')
+                active
+                @endif" href="{{route('teachers.notice_board')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-chat-round text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Thông báo</span>
                 </a>

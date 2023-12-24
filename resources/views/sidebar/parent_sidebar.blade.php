@@ -1,19 +1,9 @@
             <li class="nav-item">
-                <a class="nav-link @if (Request::segment(2)=='dashboard')
-            active
-            @endif" href="{{route('parents.dashboard')}}">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
             <a class="nav-link @if (Request::segment(1)=='my-student')
             active
             @endif" href="{{ route('parents.my-student', ['id'=>Auth::user()->parent_id]) }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-single-02 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Con của tôi</span>
                 </a>
@@ -21,7 +11,7 @@
              <li class="nav-item">
                 <a class="nav-link" href="{{route('parents.notice_board')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    <i class="ni ni-chat-round  text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Thông báo</span>
                 </a>
